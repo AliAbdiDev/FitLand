@@ -1,8 +1,8 @@
 import Header from "@/components/layout/Header";
 import Body from "@/components/layout/landing/Body";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
-import Image from "next/image";
+// import Image from "next/image";
 
 
 export default function Home() {
