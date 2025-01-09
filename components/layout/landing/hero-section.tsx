@@ -14,9 +14,9 @@ const backgroundPattern = {
 function HeroSection() {
   return (
     <section className="max-lg:px-[4%]">
-      <div className="pt-20 max-w-7xl mx-auto ">
+      <div className="md:pt-20 pt-14 max-w-7xl mx-auto ">
         <div className="flex max-md:w-full md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center  z-0 relative">
-          <div className=" space-y-4 pb-20 w-[30rem] max-md:text-center max-md:mx-auto">
+          <div className=" space-y-4 w-[30rem] max-md:text-center max-md:mx-auto">
             <p className="text-zinc-600">Buy easily and securely!</p>
 
             <span className="block">

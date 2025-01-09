@@ -7,22 +7,23 @@ import SideBar from "./landing/side-bar";
 
 
 const firstList = [
-  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products" },
-  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts" },
+  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'/products'},
+  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'/discounts'},
   {
     id: 3,
     src: null,
     alt: "icon",
     label: "best sellers",
     icon: <Award width={19} height={19} className="text-primary" />,
+     url:'/best-sellers'
   },
 ];
 
 const secondList = [
-  { id: 1, label: "masculine" },
-  { id: 2, label: "feminine" },
-  { id: 3, label: "childish" },
-  { id: 4, label: "sports equipment" },
+  { id: 1, label: "masculine" , url:'/masculine' },
+  { id: 2, label: "feminine"  , url:'/feminine'},
+  { id: 3, label: "childish"  , url:'/childish'},
+  { id: 4, label: "sports equipment"  , url:'/equipment'},
 ];
 
 function Header() {

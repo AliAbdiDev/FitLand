@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import { ArrowLeftCircle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 function Discount() {
   return (
@@ -34,6 +35,8 @@ function Discount() {
             width={50}
             height={50}
           />
+          {/* filter
+            <span className=""></span> */}
           <span className="absolute -bottom-44 w-full h-38 z-0 -translate-y-32 block overflow-hidden rounded-lg">
             <Image
               src={"/svg/Vector 658.svg"}
@@ -52,8 +55,15 @@ function Discount() {
           </span>
         </div>
       </Card>
+
       <Card className="h-96 max-w-80  relative -z-0 shadow-none border-none">
           <div className=" h-96 overflow-hidden rounded-lg">
+            <span className="absolute top-0 left-0 h-[27.2rem] w-full z-10 backdrop-blur-md block bg-black/60 rounded-lg lg:hidden">
+            <div className="size-full flex flex-col items-center justify-end pb-10 text-center gap-5 p-3 text-white">
+              <p className="text-lg max-w-[17rem]">Enter the world of new products with just one click</p>
+              <Link href={'/'} className="border-2 border-white py-2 px-3 rounded-lg">latest products</Link>
+            </div>
+            </span>
             <Image
               unoptimized
               src={"/image/Rectangle 1170.png"}
