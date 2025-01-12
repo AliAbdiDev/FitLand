@@ -80,4 +80,7 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .title-section{
+    @apply text-3xl font-semibold text-secondary;
+  }
 }

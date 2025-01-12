@@ -11,7 +11,7 @@ import Link from "next/link";
 
 function Discount() {
   return (
-    <section className="max-w-7xl mx-auto flex items-center justify-center">
+    <section className="max-w-7xl mx-auto flex items-center justify-center max-md:mb-16">
      <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 justify-center items-center gap-9 max-md:space-y-12 ">
      <Card className="h-96 max-w-80 shadow-none border-none max-lg:hidden md:mt-20 p-0">
         <CardContent className="flex items-start size-full justify-end flex-col *:p-0 gap-2 p-0">
