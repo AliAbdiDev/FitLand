@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
-  ArrowLeftCircleIcon,
+  ArrowRightCircle,
   CalendarDaysIcon,
   ThumbsUp,
 } from "lucide-react";
@@ -38,7 +38,7 @@ function HeroSection() {
               variant={"secondary"}
               className="text-white py-5 font font-semibold "
             >
-              View products <ArrowLeftCircleIcon className="font-medium" />
+              View products <ArrowRightCircle className="font-medium" />
             </Button>
           </div>
 

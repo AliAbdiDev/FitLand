@@ -13,7 +13,7 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useRef } from "react";
 
-function SliderSection({ cardData }: { cardData: CardType[] }) {
+function MySlider({ cardData }: { cardData: CardType[] }) {
   const plugin = useRef(Autoplay({ delay: 3000 }));
 
   return (
@@ -30,18 +30,19 @@ function SliderSection({ cardData }: { cardData: CardType[] }) {
       <CarouselContent className="-ml-1">
         {cardData?.map((items, index) => (
           <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/3">
-            <Card className="rounded-xl p-0 m-1 border-zinc-400">
-              <CardHeader className="p-0 overflow-hidden w-full rounded-t-xl -translate-y-1 border-none">
+            <Card className="rounded-xl p-0 m-1 border-zinc-300  h-[22rem]">
+              <CardHeader className="p-0 overflow-hidden w-full rounded-t-xl -translate-y-1 border-none h-[12rem]">
                 <Image
                   src={items?.imageHeader || "/image/Rectangle 1166(2).jpg"}
                   alt={items?.name.toLowerCase() || "pic"}
                   className="size-full object-cover"
+                  loading="lazy"
                   width={300}
                   height={300}
                 />
               </CardHeader>
 
-              <CardContent className="flex items-start justify-center flex-col gap-3 p-4">
+              <CardContent className="flex items-start justify-center flex-col gap-3 px-4 py-5">
                 <div className="space-y-1.5">
                   <CardTitle>{items?.name || "Null data Title"}</CardTitle>
                   <p className="">${items?.price}</p>
@@ -55,13 +56,14 @@ function SliderSection({ cardData }: { cardData: CardType[] }) {
                   ))}
                 </div>
                 {items?.image && (
-                  <div className="flex items-center justify-center gap-2 w-9 h-7 *:size-full *:object-cover">
+                  <div className="flex items-center justify-start gap-2 *:w-9 *:h-7 *:size-full *:object-cover w-full">
                     {items?.image.map((img, index) => (
                       <Image
                         key={index}
                         src={img || "/image/pic"}
                         alt="pic-prudocts"
-                        width={30}
+                        loading="lazy"
+                        width={20}
                         height={20}
                       />
                     ))}
@@ -83,4 +85,4 @@ function SliderSection({ cardData }: { cardData: CardType[] }) {
   );
 }
 
-export default SliderSection;
+export default MySlider;
