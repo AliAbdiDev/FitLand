@@ -40,9 +40,9 @@ function SideBar({ sideBarData: manList }: { sideBarData: SideBarData }) {
             </div>
           </SheetHeader>
           {/* body list */}
-          <SheetTitle className="pt-4 pb-2">Find What You Need</SheetTitle>
+          <SheetTitle className="pt-4 pb-1">Find What You Need</SheetTitle>
           <ScrollArea className="text-start space-y-1 border-b border-zinc-300 pb-4 pe-3">
-            <ul className=" space-y-1.5 max-h-64">
+            <ul className=" space-y-1.5 max-h-56">
               {manList?.map((item, index) => (
                 <li
                   key={index}

@@ -27,7 +27,7 @@ const FOOTER_DATA = [
 
 function Footer() {
   return (
-    <footer className="w-full bg-secondary text-white pt-12 max-sm:pt-10 pb-5 px-7 space-y-7 mt-20">
+    <footer className="w-full bg-secondary text-white pt-12 max-sm:pt-10 pb-5 px-[4%] space-y-7 mt-20">
       <div className=" flex items-center justify-between max-sm:flex-col-reverse w-full">
         <ul className="grid grid-cols-3 gap-5 w-1/2 *:space-y-2 max-md:text-sm max-sm:hidden">
           {FOOTER_DATA?.map((list, index) => (

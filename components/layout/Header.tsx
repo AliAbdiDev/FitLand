@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import SideBar from "./landing/side-bar";
 
-
 const firstList = [
   { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'/products'},
   { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'/discounts'},
@@ -28,7 +27,7 @@ const secondList = [
 
 function Header() {
   return (
-    <header className="w-full pt-6 max-w-7xl mx-auto flex flex-col gap-9 max-lg:px-[4%]">
+    <header className="w-full pt-6  px-[4%] mx-auto flex flex-col gap-9 ">
       <nav className="w-full flex lg:items-center lg:justify-around gap-9 max-lg:flex-col-reverse items-center justify-center">
         <div className="flex items-center justify-around basis-1/4 max-lg:hidden  ">
           <Button className="rounded-lg px-3">
