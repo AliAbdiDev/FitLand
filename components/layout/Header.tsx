@@ -6,8 +6,8 @@ import Link from "next/link";
 import SideBar from "./landing/side-bar";
 
 const firstList = [
-  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'/shop'},
-  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'/shop'},
+  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'#'},
+  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'#'},
   {
     id: 3,
     src: null,
@@ -19,7 +19,7 @@ const firstList = [
 ];
 
 const secondList = [
-  { id: 1, label: "masculine" , url:'/masculine' },
+  { id: 1, label: "masculine" , url:'/shop' },
   { id: 2, label: "feminine"  , url:'/feminine'},
   { id: 3, label: "childish"  , url:'/childish'},
   { id: 4, label: "sports equipment"  , url:'/equipment'},

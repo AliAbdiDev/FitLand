@@ -44,15 +44,16 @@ function SideBar({ sideBarData: manList }: { sideBarData: SideBarData }) {
           <ScrollArea className="text-start space-y-1 border-b border-zinc-300 pb-4 pe-3">
             <ul className=" space-y-1.5 max-h-56">
               {manList?.map((item, index) => (
-                <li
+                <Link
+                  href={item?.url}
                   key={index}
                   className={cn(
-                    "p-1.5 rounded-lg",
-                    path.startsWith(item?.url) && "bg-primary/40"
+                    "p-1.5 rounded-lg w-full block",
+                    path.includes(item?.url) && "bg-primary/40"
                   )}
                 >
-                  {item?.label}
-                </li>
+                  <li>{item?.label}</li>
+                </Link>
               ))}
             </ul>
           </ScrollArea>
@@ -113,9 +114,7 @@ function SideBar({ sideBarData: manList }: { sideBarData: SideBarData }) {
                       height={21}
                     />
                   </div>
-                  <p className="w-2/3 sm:!underline">
-                    Telegram
-                  </p>
+                  <p className="w-2/3 sm:!underline">Telegram</p>
                 </Link>
               </li>
             </ul>
