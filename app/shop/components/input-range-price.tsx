@@ -3,7 +3,7 @@
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { initialState, rengeInput } from "@/redux/shop-filters-slice";
-import { AppDispatch, RootState } from "@/redux/store";
+import { AppDispatch } from "@/redux/store";
 import React, { forwardRef, memo } from "react";
 
 interface Props {
