@@ -117,10 +117,11 @@ function Body() {
         <div className="w-full text-center pb-12">
           <h2 className="title-section">Latest in sports news</h2>
         </div>
-
+              
         <div className="flex items-center lg:justify-between justify-center w-full gap-x-5 max-lg:gap-y-12 max-lg:flex-wrap *:w-1/2 max-md:*:w-full">
+          
           <Card className="rounded-lg h-[30rem] border-zinc-300">
-            <CardHeader className="!p-0 h-[17rem] w-full rounded-t-lg overflow-hidden">
+            <CardHeader className="!p-0 max-h-[15rem] w-full  rounded-t-lg  overflow-hidden">
               <Image
                 unoptimized
                 src={"/image/blog(2).png"}
@@ -132,13 +133,13 @@ function Body() {
             </CardHeader>
             <CardContent className="pt-5 space-y-3">
               <CardTitle>
-                Increasing the salary of footballers and exemption from military
-                service
+                Australia&lsquo;s defeat in the first step of the Women&lsquo;s
+                World Cup!
               </CardTitle>
               <CardDescription className="text-black">
-                The news indicates that the president of the football federation
-                announced that every football player&lsquo;s salary will be
-                increased by 50% in the current season. He also said...
+              The news indicates that the president of the football federation
+              announced that every football player&lsquo;s salary will be
+              increased by 50% in the current season.
               </CardDescription>
             </CardContent>
             <CardFooter>
@@ -146,7 +147,7 @@ function Body() {
             </CardFooter>
           </Card>
           <Card className="rounded-lg h-[30rem] border-zinc-300">
-            <CardHeader className="!p-0 h-[17rem] w-full  rounded-t-lg  overflow-hidden">
+            <CardHeader className="!p-0 max-h-[15rem] w-full  rounded-t-lg  overflow-hidden">
               <Image
                 unoptimized
                 src={"/image/blog.jpg"}

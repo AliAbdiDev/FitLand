@@ -10,7 +10,7 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  .flex-center{
+  .flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,6 +26,7 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
     --primary: 18 100% 50%;
+    --primary-light: 18 100% 70%;
     --primary-foreground: 0 0% 98%;
     --secondary: 241 89% 10%;
     --secondary-foreground: 0 0% 9%;
@@ -80,7 +81,16 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-  .title-section{
+}
+
+@layer components {
+  .title-section {
     @apply text-3xl font-semibold text-secondary;
+  }
+  .wrap-card {
+    @apply max-sm:flex-center flex-col sm:grid grid-cols-fit-230;
+  }
+  .sticky-sidbar-wrapper {
+    @apply sticky top-20 left-0 h-screen w-1/5  rounded-xl border border-zinc-300 text-black overflow-y-auto max-lg:hidden;
   }
 }

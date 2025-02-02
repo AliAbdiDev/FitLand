@@ -6,8 +6,8 @@ import Link from "next/link";
 import SideBar from "./landing/side-bar";
 
 const firstList = [
-  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'/products'},
-  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'/discounts'},
+  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'/shop'},
+  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'/shop'},
   {
     id: 3,
     src: null,
@@ -27,7 +27,7 @@ const secondList = [
 
 function Header() {
   return (
-    <header className="w-full pt-6  px-[4%] mx-auto flex flex-col gap-9 ">
+    <header className="w-full pt-6 px-[4%] mx-auto flex flex-col gap-9 pb-20">
       <nav className="w-full flex lg:items-center lg:justify-around gap-9 max-lg:flex-col-reverse items-center justify-center">
         <div className="flex items-center justify-around basis-1/4 max-lg:hidden  ">
           <Button className="rounded-lg px-3">
@@ -55,12 +55,12 @@ function Header() {
         </div>
       </nav>
 
-      <div className="w-full flex items-center justify-center gap-9 px-12  max-lg:hidden">
+      <div className="w-full flex items-center justify-center gap-9 px-3  max-lg:hidden">
         <div className=" bg-amber-50 rounded-md py-2 w-full flex items-center justify-around">
           <ul className="flex-center flex-row-reverse gap-7">
             {firstList?.map((item) => (
               <li key={item.id}>
-                <Link href={"/"} className="flex-center gap-2">
+                <Link href={item?.url} className="flex-center gap-2">
                   <span>
                     {item?.src ? (
                       <Image
