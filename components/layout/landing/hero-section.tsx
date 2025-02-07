@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import {
   ArrowRightCircle,
@@ -5,6 +6,7 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import Image from "next/image";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const backgroundPattern = {
   backgroundColor: "#fffffe",
@@ -12,6 +14,16 @@ const backgroundPattern = {
 };
 
 function HeroSection() {
+  const [count, setCount] = useState(0);
+  useEffect(()=>{
+    console.info(count);
+  },[count])
+
+  const showUseCallbackResult = useMemo(()=>{
+    console.info('show');
+    return count;
+  },[count])
+  console.info('use Callback=>>>',showUseCallbackResult);
   return (
     <section className="max-lg:px-[4%] px-[2%]">
       <div className=" max-w-7xl mx-auto ">
@@ -37,6 +49,9 @@ function HeroSection() {
             <Button
               variant={"secondary"}
               className="text-white py-5 font font-semibold "
+              onClick={()=>{
+                setCount(count+1);
+              }}
             >
               View products <ArrowRightCircle className="font-medium" />
             </Button>

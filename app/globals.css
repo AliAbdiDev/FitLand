@@ -91,6 +91,9 @@ body {
     @apply max-sm:flex-center flex-col sm:grid grid-cols-fit-230;
   }
   .sticky-sidbar-wrapper {
-    @apply sticky top-20 left-0 h-screen w-1/5  rounded-xl border border-zinc-300 text-black overflow-y-auto max-lg:hidden;
+    @apply sticky top-20 left-0 h-screen w-1/5 rounded-xl border border-zinc-300 text-black overflow-y-auto;
+  }
+  .parent-color-product{
+    @apply flex -space-x-[0.525rem] *:block *:rounded-full *:ring-2 *:ring-background *:size-5;
   }
 }

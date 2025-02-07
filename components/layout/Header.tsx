@@ -27,7 +27,7 @@ const secondList = [
 
 function Header() {
   return (
-    <header className="w-full pt-6 px-[4%] mx-auto flex flex-col gap-9 pb-20">
+    <header className="w-full pt-6 px-[4%] mx-auto flex flex-col gap-9 pb-7 sm:pb-20">
       <nav className="w-full flex lg:items-center lg:justify-around gap-9 max-lg:flex-col-reverse items-center justify-center">
         <div className="flex items-center justify-around basis-1/4 max-lg:hidden  ">
           <Button className="rounded-lg px-3">
@@ -81,7 +81,7 @@ function Header() {
           <ul className="flex-center gap-7">
             {secondList?.map((item) => (
               <li key={item?.id}>
-                <Link href={"/"}>{item.label}</Link>
+                <Link href={item?.url}>{item.label}</Link>
               </li>
             ))}
           </ul>
