@@ -68,7 +68,7 @@ function HeroSection() {
             ></Image>
           </div>
 
-          <ul className=" space-y-5 text-secondary font-medium text-[18px] pb-32 max-lg:hidden">
+          <ul className=" space-y-5 text-secondary font-medium text-[18px] max-lg:hidden">
             <li className="flex items-center justify-end gap-5">
               <span className="flex flex-col items-end justify-center">
                 <p>+ 300</p>
