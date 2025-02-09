@@ -4,14 +4,14 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { initialState, rengeInput } from "@/redux/shop-filters-slice";
 import { AppDispatch } from "@/redux/store";
-import React, { forwardRef, memo } from "react";
+import React, { memo } from "react";
 
 interface Props {
   shopStateValue: { range: number[] };
   dispatch: AppDispatch;
 }
 
-const InputRangePrice = forwardRef(({ shopStateValue, dispatch }: Props) => {
+const InputRangePrice = ({ shopStateValue, dispatch }: Props) => {
   const formatPrice = (price: number) => {
     return price === initialState?.range[1]
       ? `$${price.toLocaleString()}+`
@@ -39,6 +39,6 @@ const InputRangePrice = forwardRef(({ shopStateValue, dispatch }: Props) => {
       </div>
     </div>
   );
-});
+};
 InputRangePrice.displayName = "InputRangePrice";
 export default memo(InputRangePrice);

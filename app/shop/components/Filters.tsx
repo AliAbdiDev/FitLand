@@ -39,7 +39,7 @@ function Filters() {
           <h3 className=" font-semibold">Filters</h3>
           <button
             type="button"
-            className="text-sm"
+            className="text-sm text-red-700"
             onClick={() => {
               dispatch(resetFilters());
               tagInputRef.current?.reset();

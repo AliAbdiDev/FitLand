@@ -66,6 +66,7 @@ function SortAndFilterMobileSize({ sortData }: Props) {
             </DrawerTitle>
             <button
               type="button"
+              className="text-red-700"
               onClick={() => {
                 if (nameButton) {
                   dispatch(resetFilters());
@@ -107,6 +108,7 @@ function SortAndFilterMobileSize({ sortData }: Props) {
                       </pre>
                     ),
                   });
+                  setOpenDrawer({open:false,nameButton:''})
                 }}
               >
                 submit

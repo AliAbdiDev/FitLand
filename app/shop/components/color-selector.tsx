@@ -2,7 +2,7 @@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { colorSelector } from "@/redux/shop-filters-slice";
 import { AppDispatch } from "@/redux/store";
-import { forwardRef, memo } from "react";
+import {memo } from "react";
 
 const SELECT_COLORS = [
   {
@@ -48,12 +48,12 @@ const SELECT_COLORS = [
       "border-emerald-500 bg-emerald-500 data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500",
   },
 ];
-const ColorSelector = forwardRef(
+const ColorSelector = 
   ({ colorValue, dispatch }: { colorValue: string; dispatch: AppDispatch }) => {
     console.info('colorValue',colorValue);
     return (
       <RadioGroup
-        className="flex gap-0.5 *:max-[1060px]:!size-[1.45rem] min-[1110px]:gap-1"
+        className="flex gap-0.5 *:max-[1060px]:!size-[1.45rem] min-[1110px]:gap-1 duration-150"
         value={colorValue}
         onValueChange={(value) => {
           dispatch(colorSelector({color:value}));
@@ -72,13 +72,13 @@ const ColorSelector = forwardRef(
             key={color?.value}
             value={color?.value}
             aria-label={color?.label}
-            className={`size-6 shadow-none ${color?.className}`}
+            className={`size-6 shadow-none duration-150 ${color?.className}`}
           />
         ))}
       </RadioGroup>
     );
   }
-);
+
 
 ColorSelector.displayName = "ColorSelector";
 export default memo(ColorSelector);

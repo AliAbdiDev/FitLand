@@ -19,14 +19,14 @@ function FilterAccardion({setTagInputValue,tagInputRef}) {
     const filtersValue = useSelector((state: RootState) => state.shopFilters);
     const AccardionData = [
         {
-          title: "Price",
+          title: "Price:",
           value: "1",
           accardionContent: (
             <InputRangePrice shopStateValue={filtersValue} dispatch={dispatch} />
           ),
         },
         {
-          title: "Color",
+          title: "Color:",
           value: "2",
           accardionContent: (
             <ColorSelector
@@ -36,7 +36,7 @@ function FilterAccardion({setTagInputValue,tagInputRef}) {
           ),
         },
         {
-          title: "Size",
+          title: "Size:",
           value: "3",
           accardionContent: (
             <div className="text-center text-xs w-full text-black grid grid-cols-3 gap-2 *:py-1.5 *:rounded-sm *:px-3 *:bg-zinc-200">
@@ -52,7 +52,7 @@ function FilterAccardion({setTagInputValue,tagInputRef}) {
                     }
                   }}
                   className={cn(
-                    "cursor-pointer block",
+                    "cursor-pointer block duration-150",
                     !size.includes("remove") &&
                       size === filtersValue.sizeSelected &&
                       "!bg-primary-light"
@@ -65,7 +65,7 @@ function FilterAccardion({setTagInputValue,tagInputRef}) {
           ),
         },
         {
-          title: "Brands",
+          title: "Brands:",
           value: "4",
           accardionContent: (
             <MyTagInput
@@ -82,7 +82,7 @@ function FilterAccardion({setTagInputValue,tagInputRef}) {
             type="multiple"
             className="w-full"
             defaultValue={Array.from(
-              { length: AccardionData?.length - 1 },
+              { length: AccardionData?.length },
               (_, index) => (index + 1).toString()
             )}
           >

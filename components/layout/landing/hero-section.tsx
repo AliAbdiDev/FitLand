@@ -6,7 +6,7 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {  useEffect, useMemo, useState } from "react";
 
 const backgroundPattern = {
   backgroundColor: "#fffffe",
