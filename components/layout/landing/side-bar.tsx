@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 
 type SideBarData = {
   id: number;
@@ -21,7 +21,7 @@ type SideBarData = {
 }[];
 
 function SideBar({ sideBarData: manList }: { sideBarData: SideBarData }) {
-  const path = usePathname();
+  // const path = usePathname();
   return (
     <Sheet>
       <SheetTrigger>
@@ -49,7 +49,7 @@ function SideBar({ sideBarData: manList }: { sideBarData: SideBarData }) {
                   key={index}
                   className={cn(
                     "p-1.5 rounded-lg w-full block",
-                    path.includes(item?.url) && "bg-primary/40"
+                    // path.includes(item?.url) && "bg-primary/40"
                   )}
                 >
                   <li>{item?.label}</li>

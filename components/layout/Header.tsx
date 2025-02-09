@@ -6,23 +6,23 @@ import Link from "next/link";
 import SideBar from "./landing/side-bar";
 
 const firstList = [
-  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'#'},
-  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'#'},
+  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'/shop'},
+  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'/shop'},
   {
     id: 3,
     src: null,
     alt: "icon",
     label: "best sellers",
     icon: <Award width={19} height={19} className="text-primary" />,
-     url:'/best-sellers'
+     url:'/shop'
   },
 ];
 
 const secondList = [
   { id: 1, label: "masculine" , url:'/shop' },
-  { id: 2, label: "feminine"  , url:'/feminine'},
-  { id: 3, label: "childish"  , url:'/childish'},
-  { id: 4, label: "sports equipment"  , url:'/equipment'},
+  { id: 2, label: "feminine"  , url:'/shop'},
+  { id: 3, label: "childish"  , url:'/shop'},
+  { id: 4, label: "sports equipment"  , url:'/shop'},
 ];
 
 function Header() {

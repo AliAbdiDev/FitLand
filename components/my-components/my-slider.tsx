@@ -29,7 +29,7 @@ function MySlider({ cardData }: { cardData: CardType[] }) {
     >
       <CarouselContent className="-ml-1">
         {cardData?.map((items, index) => (
-          <CarouselItem key={index} className="pl-1 max-sm:basis-full md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={index} className="pl-4 max-sm:basis-full md:basis-1/2 lg:basis-1/3">
             <Card className="rounded-xl p-0 m-1 border-zinc-300  h-[22rem] max-sm:max-w-[90%] mx-auto">
               <CardHeader className="p-0 overflow-hidden w-full rounded-t-xl -translate-y-1 border-none h-[12rem]">
                 <Image
