@@ -64,6 +64,7 @@ function HeroSection() {
               width={250}
               height={250}
               className="size-full"
+              unoptimized
               alt="image-hero-section"
             ></Image>
           </div>
