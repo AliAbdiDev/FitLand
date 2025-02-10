@@ -6,7 +6,6 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import Image from "next/image";
-import {  useEffect, useMemo, useState } from "react";
 
 const backgroundPattern = {
   backgroundColor: "#fffffe",
@@ -14,18 +13,9 @@ const backgroundPattern = {
 };
 
 function HeroSection() {
-  const [count, setCount] = useState(0);
-  useEffect(()=>{
-    console.info(count);
-  },[count])
-
-  const showUseCallbackResult = useMemo(()=>{
-    console.info('show');
-    return count;
-  },[count])
-  console.info('use Callback=>>>',showUseCallbackResult);
   return (
     <section className="max-lg:px-[4%] px-[2%]">
+
       <div className=" max-w-7xl mx-auto ">
         <div className="flex max-md:w-full md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center z-0 relative">
           <div className=" space-y-4 w-[30rem] max-md:text-center max-md:mx-auto">

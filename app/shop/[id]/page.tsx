@@ -4,12 +4,14 @@ import cardData from "../card-data";
 import DetailProduct from "./detial-product";
 
 async function SinglePageProduct({ params }: NextPageProps) {
-  const { id = "" } = await params;
+  const { id  } = await params;
   const findDataProduct = cardData.find((card) => card?.id === id);
   console.info(findDataProduct);
+ 
   return (
     <main className="min-h-screen px-[5%]">
       <section className="flex items-center justify-center gap-7 w-full ">
+        {/* images section  */}
         <div className=" w-1/2 flex-center">
           <div className=" rounded-md overflow-hidden space-y-7 w-full">
             <span className=" h-96 block rounded-md w-full">
@@ -68,7 +70,7 @@ async function SinglePageProduct({ params }: NextPageProps) {
           </div>
           <span className=""></span>
         </div>
-
+        {/* text and detial Prodct */}
         <div className="space-y-3 *:block w-1/2">
           <span className="">
             <h1>KD17</h1>
@@ -86,8 +88,6 @@ async function SinglePageProduct({ params }: NextPageProps) {
           </span>
 
           <DetailProduct />
-
-          
         </div>
       </section>
     </main>
