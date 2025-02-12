@@ -1,4 +1,3 @@
-'use client'
 import { Button } from "@/components/ui/button";
 import {
   ArrowRightCircle,
@@ -39,9 +38,6 @@ function HeroSection() {
             <Button
               variant={"secondary"}
               className="text-white py-5 font font-semibold "
-              onClick={()=>{
-                setCount(count+1);
-              }}
             >
               View products <ArrowRightCircle className="font-medium" />
             </Button>

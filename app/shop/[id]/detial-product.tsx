@@ -148,7 +148,7 @@ function DetailProduct() {
           </li>
         </ul>
       </span>
-      
+
       <DialogComponent
         isOpenDialog={isOpenDialog}
         setIsOpenDialog={useCallback((open) => setIsOpenDialog(open), [])}
