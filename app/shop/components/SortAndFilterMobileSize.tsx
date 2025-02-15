@@ -41,7 +41,7 @@ function SortAndFilterMobileSize({ sortData }: Props) {
           }}
         >
           Filter
-          <SlidersHorizontal size={15}/>
+          <SlidersHorizontal size={15} />
         </button>
         <button
           className="flex items-center justify-center gap-2"
@@ -51,7 +51,7 @@ function SortAndFilterMobileSize({ sortData }: Props) {
           }}
         >
           Sort
-          <ListFilter size={15}/>
+          <ListFilter size={15} />
         </button>
       </div>
 
@@ -76,9 +76,7 @@ function SortAndFilterMobileSize({ sortData }: Props) {
                 }
               }}
             >
-              {nameButton
-                ? "remove filters"
-                : "remove sort"}
+              {nameButton ? "remove filters" : "remove sort"}
             </button>
           </div>
 
@@ -88,31 +86,33 @@ function SortAndFilterMobileSize({ sortData }: Props) {
                 setTagInputValue={setTagInputValue}
                 tagInputRef={tagInputRef}
               />
-            {nameButton&& ( <Button
-            variant={'default'}
-                type="submit"
-                className="mt-5"
-                onClick={() => {
-                  toast({
-                    title:
-                      "This is demo mode. The project is going to be updated",
-                    description: (
-                      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">
-                          {JSON.stringify(
-                            { ...filtersValue, tagInputValue: tagInputValue },
-                            null,
-                            2
-                          )}
-                        </code>
-                      </pre>
-                    ),
-                  });
-                  setOpenDrawer({open:false,nameButton:''})
-                }}
-              >
-                submit
-              </Button>)}
+              {nameButton && (
+                <Button
+                  variant={"default"}
+                  type="submit"
+                  className="mt-5"
+                  onClick={() => {
+                    toast({
+                      title:
+                        "This is demo mode. The project is going to be updated",
+                      description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                          <code className="text-white">
+                            {JSON.stringify(
+                              { ...filtersValue, tagInputValue: tagInputValue },
+                              null,
+                              2
+                            )}
+                          </code>
+                        </pre>
+                      ),
+                    });
+                    setOpenDrawer({ open: false, nameButton: "" });
+                  }}
+                >
+                  submit
+                </Button>
+              )}
             </>
           ) : (
             <ul className="w-full flex flex-col items-start justify-center gap-3 ">
