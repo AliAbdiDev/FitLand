@@ -29,9 +29,9 @@ function DetailProduct() {
   >(productReducer, initialState);
 
   return (
-    <>
+    <div className="space-y-5">
       <span className="max-w-sm block">
-        Size:
+        <p className="text-xl">Size:</p>
         <div className="text-center text-xs w-full pt-2 text-black grid grid-cols-3 gap-2 *:duration-150 *:py-2 *:rounded-md *:px-3">
           {["S", "L", "M", "XL", "XXL"].map((size, index) => (
             <button
@@ -54,8 +54,8 @@ function DetailProduct() {
         </div>
       </span>
 
-      <span className="">
-        Color:
+      <span className="block">
+        <p className="text-xl">Color:</p>
         <div className="flex items-center gap-2 pt-2">
           {[
             { lable: "red", color: "bg-red-600" },
@@ -153,7 +153,7 @@ function DetailProduct() {
         isOpenDialog={isOpenDialog}
         setIsOpenDialog={useCallback((open) => setIsOpenDialog(open), [])}
       />
-    </>
+    </div>
   );
 }
 
