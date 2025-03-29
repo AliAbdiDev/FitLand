@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ReduxProviderComponent from "@/redux/redux-provider-component";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import Layout from "@/components/layout/Layout";
 
 export const metadata: Metadata = {
   title: "FitLand",
@@ -18,10 +17,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        <Header />
         <ReduxProviderComponent>{children}</ReduxProviderComponent>
         <Toaster />
-        <Footer />
       </body>
     </html>
   );

@@ -33,11 +33,13 @@ function Header() {
           <Button className="rounded-lg px-3">
             <LucideShoppingBag />
           </Button>
+          <Link href={'/login'}>
           <Button variant={"outline"} className="rounded-lg">
             <User className="text-zinc-500" />
             <span className="border-r pr-2 border-zinc-300">Login</span>
             <span>Rigister</span>
           </Button>
+          </Link>
         </div>
 
         <div className="w-full lg:basis-2/4 max-lg:flex items-center justify-start">
