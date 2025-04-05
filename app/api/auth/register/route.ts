@@ -7,7 +7,7 @@ import { email, password } from '@/app/shemas';
 const registerSchema = z.object({
     email,
     password,
-    name: z.string().min(1, 'Name is required').optional(), 
+    name: z.string().min(1, 'Name is required').optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -31,12 +31,12 @@ export async function POST(request: NextRequest) {
             });
         }
         const hashedPassword = await hashPassword(password);
-        await prisma.user.create({ data: { email, password: hashedPassword, name } });
+        await prisma.user.create({ data: { email, password: hashedPassword, name, } });
         // NextResponse.redirect(new URL('/auth/login',request.url))
-        return NextResponse.json({ message: 'Registration was successful' }, {status:201})
+        return NextResponse.json({ message: 'Registration was successful' }, { status: 201 })
     } catch (error) {
         if (error) {
-            return createErrorResponse({details:error?.message})
+            return createErrorResponse({ details: error?.message })
         }
     }
 }
