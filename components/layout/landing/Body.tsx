@@ -16,7 +16,7 @@ import BanerSection from "./baner-section";
 // import { ChevronRight } from "lucide-react";
 // import MyButtonLink from "@/components/my-components/my-btns";
 // import SliderSection from "../../my-components/my-slider";
-import { CardType } from "@/types/card-type";
+import { CardType } from "@/types/card";
 import SliderSection from "./slider-section";
 import { Button } from "@/components/ui/button";
 import { ArrowRightCircle } from "lucide-react";

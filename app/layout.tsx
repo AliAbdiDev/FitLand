@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ReduxProviderComponent from "@/redux/redux-provider-component";
-import { Toaster } from "@/components/ui/sonner"
-import Layout from "@/components/layout/Layout";
+import { Toaster } from "@/components/ui/sonner";
+import { NextAuthSession, Redux } from "@/components/providers";
+// import Layout from "@/components/layout/Layout";
 
 export const metadata: Metadata = {
   title: "FitLand",
@@ -16,9 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body >
-        <ReduxProviderComponent>{children}</ReduxProviderComponent>
+      <body>
+        <NextAuthSession>
+          <Redux>{children}</Redux>
         <Toaster />
+        </NextAuthSession>
       </body>
     </html>
   );

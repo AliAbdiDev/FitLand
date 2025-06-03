@@ -13,6 +13,6 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
-  token     String? 
-  role      String?  @default("user")
+  token     String?
+  role      String   @default("user")
 }

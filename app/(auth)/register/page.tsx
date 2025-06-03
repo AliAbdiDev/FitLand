@@ -6,11 +6,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { actionFetcher } from "@/app/actions/actionFetcher";
 import TitleAuth from "../TitleAuth";
-import { toast } from "sonner";
-import MyToasterSonner from "@/components/my-components/my-toaster";
+// import { toast } from "sonner";
+// import MyToasterSonner from "@/components/my-components/my-toaster";
 
-export default async function RegisterPage({ searchParams }) {
-  const { error } = await searchParams;
+export default async function RegisterPage({  }) {
+  // const { error } = await searchParams;
   const registerAction = async (formData) => {
     "use server";
     const sendData = {

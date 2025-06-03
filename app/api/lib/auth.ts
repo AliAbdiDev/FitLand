@@ -11,15 +11,12 @@ export const comparePassword = async (enteredPassword: string, hashedPassword: s
     return bcrypt.compare(enteredPassword, hashedPassword)
 }
 
-export const generateToken = (userId: string, email: string): string => {
 
-    // iat = issued at
-    //sub = subject
-    const payload = {
-        sub: userId,
-        email,
-        iat: Math.floor(Date.now() / 1000)
-    }
+export const generateToken = (id: string): string => {
+    const payload = { sub: id };
 
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' })
+    return jwt.sign(payload, JWT_SECRET, {
+        algorithm: 'HS256',
+        expiresIn: '7d',
+    });
 }

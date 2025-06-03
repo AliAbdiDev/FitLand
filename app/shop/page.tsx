@@ -4,7 +4,7 @@ import {
 } from "@/components/my-components/my-product-card";
 
 import { cn } from "@/lib/utils";
-import { SearchParams } from "@/types/next-type";
+import { SearchParams } from "@/types/next";
 import Link from "next/link";
 import Filters from "./components/Filters";
 import SortAndFilterMobileSize from "./components/SortAndFilterMobileSize";

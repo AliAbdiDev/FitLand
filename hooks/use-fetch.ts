@@ -1,38 +1,6 @@
+import { FetchProps, FetchResult } from "@/types";
+import { fetchHandler } from "@/utils";
 import { useEffect, useState } from "react";
-
-interface UseFetchProps {
-    endpoint: string;
-    token?: string;
-    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-    payload?: any;
-    tokenIsavailable?: boolean;
-    customErrorMessage?: string;
-    dependencyOptional?: any;
-}
-
-export const API_Backend = 'https://postapi.liara.run';
-
-const checkeEndPoint = (endpoint: string) => {
-    // Endpoint should not start with slash and http.
-    const regex = /^(\/|https?:\/\/)/;
-
-    if (regex.test(endpoint)) {
-        console.error(
-            "FileName: apiHandler",
-            "Endpoint should not start with slash(/) and http.",
-            'Guide ====> The endpoint should be like this: (api/groups)'
-        );
-        return { ok: false, endpoint };
-    }
-    return { ok: true, endpoint };
-};
-
-interface UseFetchResult {
-    data: Record<string, string | number> | Record<string, string | number>[];
-    errorMessage: string | null;
-    loading: boolean;
-}
-
 
 /**
  * Custom hook for making API calls (GET, POST, PUT, DELETE).
@@ -40,77 +8,38 @@ interface UseFetchResult {
  * @param {Object} params - The parameters for the API request.
  * @param {string} params.endpoint - The API endpoint.
  * @param {string} [params.token] - Optional authorization token.
- * @param {boolean} [params.tokenIsavailable=true] - Flag to indicate if token is available.
+ * @param {string} [params.method] - HTTP method (GET, POST, PUT, PATCH, DELETE).
+ * @param {any} [params.payload] - Optional payload for POST, PUT, PATCH requests.
  * @param {string} [params.customErrorMessage] - Custom error message on failure.
- * @param {any} [params.dependencyOptional] - Optional dependency to trigger re-fetch.
+ * @param {Record<string, string> | null} [params.options] - Optional headers.
  *
- * @returns {Object} - The response data, error message, and loading state.
- * @returns {any} data - The response data from the API or null if not yet loaded.
- * @returns {string|null} errorMessage - The error message if the request fails.
- * @returns {boolean} loading - The loading state of the request.
- *
- * @example
- * const { data, errorMessage, loading } = useApi({
- *   endpoint: 'some-endpoint',
- *   method: 'GET',
- *   token: 'your-token',
- * });
- * 
- * // The API Backend used by this hook:
- * const API_Backend = 'https://your-api-url.com';
- * console.log(`The API Backend is: ${API_Backend}`);
- * 
- * // This will log:
- * // The API Backend is: https://your-api-url.com
+ * @returns {FetchResult} - The result data , response, error message, and loading state.
  */
-
 export const useFetch = ({
     endpoint,
-    token,
     method,
     payload,
-    tokenIsavailable = true,
+    options = null,
     customErrorMessage,
-    dependencyOptional = null
-}: UseFetchProps): UseFetchResult => {
-    const [data, setData] = useState<any | null>(null);
+}: FetchProps): FetchResult => {
+    const [result, setResult] = useState<Pick<FetchResult, 'data' | 'response'>>({
+        data: null,
+        response: null,
+    });
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const fetchData = async () => {
-        const endpointResult = checkeEndPoint(endpoint);
-        if (!endpointResult.ok) return;
-
-        setLoading(true);
-        setErrorMessage(null);
-
-        try {
-            const response = await fetch(`${API_Backend}/${endpointResult?.endpoint}`, {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    ...(tokenIsavailable && { Authorization: `Bearer ${token}` }),
-                },
-                ...(payload && { body: JSON.stringify(payload) })
-            });
-
-            if (!response.ok) {
-                throw new Error(customErrorMessage || 'Error occurred, please try again');
-            }
-
-            const result = await response.json();
-            setData(result);
-        } catch (error: any) {
-            setErrorMessage(error.message || 'Something went wrong');
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [endpoint, token, dependencyOptional, method, payload]);
+        setLoading(true);
+        fetchHandler({ endpoint, method, payload, options, customErrorMessage })
+            .then(({ response, data, errorMessage }) => {
+                setResult({ data, response });
+                setErrorMessage(errorMessage);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [endpoint, method, payload, options, customErrorMessage]);
 
-    return { data, errorMessage, loading };
+    return { ...result, errorMessage, loading };
 };

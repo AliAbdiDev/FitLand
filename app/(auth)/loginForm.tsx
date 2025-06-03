@@ -5,12 +5,36 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
+import { Form, useForm } from "react-hook-form";
+import { fetchHandler } from "@/utils";
+import { loginHandler } from "@/lib/auth/loginHandler";
+import { signIn, signOut, useSession } from "next-auth/react";
 export function LoginForm({
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"form">) {
+}: React.ComponentPropsWithoutRef<typeof Form>) {
+  const {
+    register,
+    control,
+    formState: { isSubmitting },
+  } = useForm();
+  const { data: session, status } = useSession();
+  console.log("🚀 ~ session:", session, status);
+
+  const onSubmit = async ({ data }) => {
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    });
+    console.log("🚀 ~ onSubmit ~ result:", result);
+  };
+
   return (
-    <form
+    <Form
+      onSubmit={onSubmit}
+      onDoubleClick={() => signOut()}
+      control={control}
       className={cn("flex flex-col gap-6  max-w-md w-full pt-6", className)}
       {...props}
     >
@@ -19,7 +43,13 @@ export function LoginForm({
           <Label htmlFor="email" className="w-fit">
             Email
           </Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            {...register("email")}
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            tabIndex={1}
+          />
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
@@ -31,9 +61,15 @@ export function LoginForm({
               Forgot your password?
             </Link>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            {...register("password")}
+            id="password"
+            type="password"
+            tabIndex={2}
+            required
+          />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
           Login
         </Button>
         {/* <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
@@ -57,6 +93,6 @@ export function LoginForm({
           register
         </Link>
       </div>
-    </form>
+    </Form>
   );
 }

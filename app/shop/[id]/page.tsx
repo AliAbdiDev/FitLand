@@ -1,4 +1,4 @@
-import { NextPageProps } from "@/types/next-type";
+import { NextPageProps } from "@/types/next";
 import cardData from "../card-data";
 import DetailProduct from "./detial-product";
 import ImageProduct from "./image-product";
