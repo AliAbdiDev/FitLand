@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 import { Form, useForm } from "react-hook-form";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import useLogin from "./useLogin";
 export function LoginForm({
   className,
@@ -26,7 +26,7 @@ export function LoginForm({
   return (
     <Form
       onSubmit={onSubmit}
-      onDoubleClick={() => signOut()}
+      // onDoubleClick={() => signOut()}
       control={control}
       className={cn("flex flex-col gap-6  max-w-md w-full pt-6", className)}
       {...props}
@@ -40,7 +40,7 @@ export function LoginForm({
             {...register("email")}
             id="email"
             type="email"
-            placeholder="m@example.com"
+            placeholder="email@example.com"
             tabIndex={1}
           />
         </div>

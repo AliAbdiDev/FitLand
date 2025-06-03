@@ -15,7 +15,7 @@ function useLogin() {
 
         googleLogin: async () => {
             await signIn("google", {
-                redirect: false,
+
             });
         }
 
