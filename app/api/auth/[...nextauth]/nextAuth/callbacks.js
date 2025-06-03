@@ -1,10 +1,25 @@
 import { createUser } from "./utils";
 
 export const callbacks = {
-  async jwt({ token, user }) {
-    if (user) {
-      token.userData = createUser(user);
+  redirect: async () => false,
+  async jwt({ token, user, account }) {
+    console.log("🚀 ~ jwt ~ account:", account);
+    if (!user) return token;
+
+    if (account.provider === "google") {
+      const { data } = await fetchHandler({
+        endpoint: "/auth/login",
+        payload: {
+          id: account.sub,
+          email: user.email,
+          name: user.name,
+        },
+        method: "POST",
+      });
+      token.userData = createUser(data);
     }
+
+    token.userData = createUser(user);
     return token;
   },
   async session({ session, token }) {

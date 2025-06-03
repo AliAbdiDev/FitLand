@@ -6,15 +6,22 @@ import { callbacks, cookies, credentialsProvider } from "./nextAuth";
 
 export const authOptions = {
   debug: process.env.NODE_ENV === "development",
-  providers: [CredentialsProvider(credentialsProvider()), GoogleProvider({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  })],
+  providers: [
+    CredentialsProvider(credentialsProvider()),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+  ],
   callbacks,
   cookies,
-  pages: {
-    signIn: "/login",
-  },
   session: {
     strategy: "jwt",
   },
