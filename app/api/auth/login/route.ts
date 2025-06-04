@@ -21,7 +21,6 @@ export async function POST(request: NextRequest) {
                 status: 400,
             });
         }
-        console.log("🚀 ~ POST ~ body:", body);
 
         // Validate the parsed body against the schema
         const result = loginShema.safeParse(body);

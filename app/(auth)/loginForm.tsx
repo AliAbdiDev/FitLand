@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 
 import { Form, useForm } from "react-hook-form";
-import { signOut, useSession } from "next-auth/react";
+// import {  useSession } from "next-auth/react";
 import useLogin from "./useLogin";
 export function LoginForm({
   className,
@@ -17,16 +17,15 @@ export function LoginForm({
     control,
     formState: { isSubmitting },
   } = useForm();
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
   const { credentialsLogin, googleLogin } = useLogin();
-  console.log("🚀 ~ session:", session, status);
 
   const onSubmit = async ({ data }) => credentialsLogin(data);
 
+  
   return (
     <Form
       onSubmit={onSubmit}
-      // onDoubleClick={() => signOut()}
       control={control}
       className={cn("flex flex-col gap-6  max-w-md w-full pt-6", className)}
       {...props}

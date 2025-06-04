@@ -2,23 +2,20 @@ import { createUser } from "./utils";
 import { fetchHandler } from "@/utils";
 
 export const callbacks = {
-  redirect: async () => false,
   async jwt({ token, user, account }) {
     if (!user) return token;
 
-    console.log("JWT Callback", { token, user, account });
     if (account.provider === "google") {
-      console.log('new log');
-      // const { data, response } = await fetchHandler({
-      //   endpoint: "/auth/login",
-      //   payload: {
-      //     id: user.id,
-      //     email: user.email,
-      //     name: user.name,
-      //   },
-      //   method: "POST",
-      // });
-      token.userData = createUser({ ...user, accessToken: account?.id_token });
+      const { data } = await fetchHandler({
+        endpoint: "/auth/provider/google",
+        payload: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        },
+        method: "POST",
+      });
+      token.userData = createUser(data);
       return token;
     }
 
