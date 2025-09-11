@@ -7,8 +7,8 @@ type Props = {
   children: ReactNode;
 };
 
-function Redux({ children }: Props) {
+function ReduxProvider({ children }: Props) {
   return <Provider store={store}>{children}</Provider>;
 }
 
-export { Redux };
+export { ReduxProvider };
