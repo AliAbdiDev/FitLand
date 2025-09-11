@@ -7,9 +7,11 @@ import Layout from "@/components/layout/Layout";
 export default function Home() {
   return (
     <Layout>
-      <section className="w-full mx-auto">
+
+      <main className="w-full mx-auto">
         <Body />
-      </section>
+      </main>
+
     </Layout>
   );
 }

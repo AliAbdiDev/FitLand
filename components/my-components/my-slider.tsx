@@ -63,6 +63,8 @@ function MySlider({ cardData }: { cardData: CardType[] }) {
                         src={img || "/image/pic"}
                         alt="pic-prudocts"
                         loading="lazy"
+                        placeholder="blur"
+                        blurDataURL={img||''}
                         width={20}
                         height={20}
                       />

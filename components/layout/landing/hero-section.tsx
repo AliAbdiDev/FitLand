@@ -86,7 +86,7 @@ function HeroSection() {
         </div>
       </div>
       <span className="block relative -z-10 h-28 -translate-y-20 max-md:hidden">
-        <div className="size-full" style={backgroundPattern}></div>
+        <div className="size-full" style={backgroundPattern}/>
       </span>
     </section>
   );

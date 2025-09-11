@@ -1,7 +1,7 @@
+import * as React from "react";
 import Image from "next/image";
 import Discount from "./card-items";
 import HeroSection from "@/components/layout/landing/hero-section";
-import * as React from "react";
 import {
   Card,
   CardContent,

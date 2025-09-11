@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ReduxProviderComponent from "@/redux/redux-provider-component";
 import { Toaster } from "@/components/ui/sonner"
-import Layout from "@/components/layout/Layout";
 
 export const metadata: Metadata = {
   title: "FitLand",
@@ -18,7 +17,18 @@ export default function RootLayout({
     <html lang="en">
       <body >
         <ReduxProviderComponent>{children}</ReduxProviderComponent>
-        <Toaster />
+        <Toaster 
+        duration={4000}
+        toastOptions={{
+          classNames: {
+            toast: "p-4 rounded-md text-white",
+            success: "bg-green-500 border-green-600",
+            error: "bg-red-500 border-red-600",
+            warning: "bg-yellow-500 border-yellow-600",
+            info: "bg-blue-500 border-blue-600",
+          },
+        }}
+      />
       </body>
     </html>
   );
