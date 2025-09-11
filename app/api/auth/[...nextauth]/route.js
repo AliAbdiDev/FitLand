@@ -4,7 +4,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { callbacks, cookies, credentialsProvider } from "./nextAuth";
 
-export const authOptions = {
+
+const handler = NextAuth({
   debug: process.env.NODE_ENV === "development",
   providers: [
     CredentialsProvider(credentialsProvider()),
@@ -25,8 +26,6 @@ export const authOptions = {
   session: {
     strategy: "jwt",
   },
-};
-
-const handler = NextAuth(authOptions);
+});
 
 export { handler as GET, handler as POST };

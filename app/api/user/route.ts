@@ -1,8 +1,9 @@
 // app/api/user/route.js
-import {prisma} from '@/app/api/lib';
+import { prisma } from '@/app/api/lib';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { extractSafeParseErrors } from '@/app/api/lib';
+import { password } from '@/app/shemas';
 
 const userSchema = z.object({
   name: z
@@ -10,6 +11,7 @@ const userSchema = z.object({
     .min(1, 'username must be at least one character')
     .max(55, 'Username must be at maximum fifty-five character'),
   email: z.string().email('Your email is not correct'),
+  password: password,
 });
 
 
@@ -42,11 +44,11 @@ export async function POST(request: NextRequest) {
     }
 
     // اگه اعتبارسنجی موفق بود، داده رو بگیریم
-    const { name, email } = validationData.data;
+    const { name, email, password } = validationData.data;
 
     // ساخت کاربر جدید
     const newUser = await prisma.user.create({
-      data: { name, email },
+      data: { name, email, password },
     });
 
     return NextResponse.json({ newUser }, { status: 201 });
