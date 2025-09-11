@@ -11,36 +11,74 @@ const loginShema = z.object({
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const result = loginShema.safeParse(body)
-
-        if (!result.success) {
-            return createErrorResponse({ message: 'invalid input', details: extractSafeParseErrors(result), status: 400 })
-
+        // Attempt to parse the request body as JSON
+        let body = null;
+        try {
+            body = await request.json();
+        } catch {
+            return createErrorResponse({
+                message: 'Invalid or missing JSON in request body',
+                status: 400,
+            });
         }
+
+        // Validate the parsed body against the schema
+        const result = loginShema.safeParse(body);
+        if (!result.success) {
+            return createErrorResponse({
+                message: 'Invalid input',
+                details: extractSafeParseErrors(result),
+                status: 400,
+            });
+        }
+
+        // Extract email and password from validated data
         const { email, password } = result.data;
 
-        //find user
-        const user = await prisma.user.findUnique({ where: { email } })
-
+        console.log("🚀 ~ POST ~ user:", result.data)
+        // Find the user in the database
+        const user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
-            return createErrorResponse({ message: 'Email is wrong', status: 401 })
+            return createErrorResponse({
+                message: 'Email is wrong',
+                status: 401,
+            });
         }
+
+        // Verify the password
         const isPasswordValid = await comparePassword(password, user.password);
         if (!isPasswordValid) {
-            return createErrorResponse({ message: 'password is wrong', status: 401 })
+            return createErrorResponse({
+                message: 'Password is wrong',
+                status: 401,
+            });
         }
-        // success
-        const token = generateToken(user?.id, user?.email);
+
+        // Generate token
+        const token = generateToken(user.id);
+        if (!token) {
+            return createErrorResponse({
+                message: 'Failed to generate token',
+                status: 500,
+            });
+        }
+
+        // Update user with token
         await prisma.user.update({
             where: { id: user.id },
-            data: { token }, // save token
+            data: { token },
         });
 
-        return NextResponse.json({ token, user: { id: user?.id, email: user?.email } }, { status: 201 })
+        // Return a successful response
+        return NextResponse.json(
+            { token, id: user.id, email: user.email },
+            { status: 201 }
+        );
     } catch (error) {
-        if (error) {
-            return createErrorResponse({})
-        }
+        console.error('🚀 ~ POST ~ error:', error);
+        return createErrorResponse({
+            message: 'Internal server error',
+            status: 500,
+        });
     }
 }

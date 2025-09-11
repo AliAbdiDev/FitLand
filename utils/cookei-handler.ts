@@ -1,4 +1,5 @@
-import { cookies } from 'next/headers';
+'use server'
+import { cookies } from "next/headers";
 
 // Interface for cookie options
 interface CookieOptions {
@@ -33,7 +34,7 @@ const DEFAULT_MAX_AGE = 7 * 24 * 60 * 60; // 604,800 seconds
  * handler.deleteCookie(); // Deletes the 'user-token' cookie
  * ```
  */
-export const cookieHandler = async ({ key='login-token', value, maxAge=DEFAULT_MAX_AGE }: CookieOptions) => {
+export const cookieHandler = async ({ key = 'access-token', value, maxAge = DEFAULT_MAX_AGE }: CookieOptions) => {
     const cookie = await cookies();
 
     // Get the current value of the cookie

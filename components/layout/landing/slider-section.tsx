@@ -1,4 +1,4 @@
-import { CardType } from "@/types/card-type";
+import { CardType } from "@/types/card";
 import MyButtonLink from "@/components/my-components/my-btns";
 import Slider from "@/components/my-components/my-slider";
 import Link from "next/link";

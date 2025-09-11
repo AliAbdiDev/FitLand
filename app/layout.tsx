@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ReduxProviderComponent from "@/redux/redux-provider-component";
 import { Toaster } from "@/components/ui/sonner"
+import { ReduxProvider } from "@/components/providers";
 
 export const metadata: Metadata = {
   title: "FitLand",
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body >
-        <ReduxProviderComponent>{children}</ReduxProviderComponent>
+        <ReduxProvider>{children}</ReduxProvider>
         <Toaster 
         duration={4000}
         toastOptions={{

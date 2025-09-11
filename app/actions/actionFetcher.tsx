@@ -4,9 +4,6 @@ import { cookieHandler } from "@/utils";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
-/**
- * Parameters for the actionFetcher function
- */
 interface FetcherParams {
   url: string;
   method?: string;
@@ -16,20 +13,12 @@ interface FetcherParams {
   customErrorMessage?: string;
 }
 
-/**
- * Response structure from the fetcher
- */
 interface FetcherResponse {
   error: string | null;
-  response: Response;
+  response: Response | null;
   data: any;
 }
 
-/**
- * Common API fetcher function
- * @param params - Parameters for the fetch request
- * @returns Promise containing the fetch result with error, response, and data
- */
 export async function actionFetcher({
   url,
   method = "GET",
@@ -39,10 +28,10 @@ export async function actionFetcher({
   customErrorMessage = "An error occurred",
 }: FetcherParams): Promise<FetcherResponse> {
   const token = (await cookieHandler({})).getValue();
-  console.log(token);
+  console.log("🚀 ~ actionFetcher ~ token:", token);
+
   try {
     const fullUrl = `${BASE_URL}${url}`;
-    // Set default headers
     const defaultHeaders: Record<string, string> = {
       "Content-Type": "application/json",
       ...(sendToken && token ? { Authorization: `Bearer ${token}` } : {}),
@@ -57,12 +46,22 @@ export async function actionFetcher({
     };
 
     const res = await fetch(fullUrl, options);
-    const responseData = await res.json();
+
+    let responseData = null;
+    try {
+      // Only parse JSON if response has content and is JSON
+      if (res.headers.get("content-type")?.includes("application/json")) {
+        responseData = await res.json();
+      }
+    } catch () {
+    }
 
     if (!res.ok) {
-      // In case of error, return custom error message along with response info and data
+      // Use API error message if available, otherwise fallback to custom message
+      const errorMessage =
+        responseData?.message || customErrorMessage || "An error occurred";
       return {
-        error: customErrorMessage,
+        error: errorMessage,
         response: res,
         data: responseData,
       };
@@ -74,9 +73,8 @@ export async function actionFetcher({
       data: responseData,
     };
   } catch (error: any) {
-    // In case of exception, return custom error message or exception message
     return {
-      error: customErrorMessage || error.message,
+      error: customErrorMessage || error.message || "An unexpected error occurred",
       response: null,
       data: null,
     };
