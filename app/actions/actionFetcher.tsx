@@ -53,7 +53,8 @@ export async function actionFetcher({
       if (res.headers.get("content-type")?.includes("application/json")) {
         responseData = await res.json();
       }
-    } catch () {
+    } catch {
+      // Ignore JSON parsing errors
     }
 
     if (!res.ok) {
