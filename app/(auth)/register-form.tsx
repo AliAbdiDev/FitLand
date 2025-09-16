@@ -12,7 +12,7 @@ function SubmitButton() {
 
   return (
     <Button type="submit" className="w-full" disabled={pending}>
-      {pending ? "Registering..." : "Register"}
+      {pending ? "در حال ثبت نام..." : "ثبت نام"}
     </Button>
   );
 }
@@ -26,14 +26,14 @@ function RegisterForm() {
             toast.error(result?.error);
             return;
           }
-          toast.success("Successfully registered");
+          toast.success("با موفقیت ثبت نام شدید");
         }}
         className={"flex flex-col gap-6 max-w-md w-full pt-6"}
       >
         <div className="grid gap-6">
           <div className="grid gap-2">
             <Label htmlFor="username" className="w-fit">
-              Username
+              نام کاربری
             </Label>
             <Input
               id="username"
@@ -45,28 +45,28 @@ function RegisterForm() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email" className="w-fit">
-              Email
+              ایمیل
             </Label>
             <Input
               id="email"
               name="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder="example@email.com"
               required
             />
           </div>
           <div className="grid gap-2">
             <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">رمز عبور</Label>
             </div>
             <Input id="password" name="password" type="password" required />
           </div>
           <SubmitButton />
         </div>
         <div className="text-center text-sm">
-          Do you have an account? {""}
+          حساب کاربری دارید؟ {""}
           <Link href="/login" className="underline underline-offset-4">
-            Login
+            ورود
           </Link>
         </div>
       </form>

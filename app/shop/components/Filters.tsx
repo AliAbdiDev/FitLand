@@ -17,7 +17,7 @@ function Filters() {
 
   const submitFilters = () => {
     toast({
-      title: "This is demo mode. The project is going to be updated",
+      title: "این حالت نمایشی است. پروژه در حال به‌روزرسانی است",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">
@@ -36,7 +36,7 @@ function Filters() {
     <section className="py-4 sticky-sidbar-wrapper me-4 w-3/12 space-y-3 max-lg:hidden">
       <ScrollArea className="size-full px-[5%]">
         <div className="pb-2 flex justify-between items-center w-full">
-          <h3 className=" font-semibold">Filters</h3>
+          <h3 className=" font-semibold">فیلترها</h3>
           <button
             type="button"
             className="text-sm text-red-700"
@@ -45,7 +45,7 @@ function Filters() {
               tagInputRef.current?.reset();
             }}
           >
-            remove filters
+            حذف فیلترها
           </button>
         </div>
         <div>
@@ -60,7 +60,7 @@ function Filters() {
             className="mt-5"
             onClick={submitFilters}
           >
-            Submit
+            اعمال فیلتر
           </Button>
         </div>
       </ScrollArea>

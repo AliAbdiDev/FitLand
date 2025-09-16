@@ -18,28 +18,27 @@ function HeroSection() {
       <div className=" max-w-7xl mx-auto ">
         <div className="flex max-md:w-full md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center z-0 relative">
           <div className=" space-y-4 w-[30rem] max-md:text-center max-md:mx-auto">
-            <p className="text-zinc-600">Buy easily and securely!</p>
+            <p className="text-zinc-600">راحت و امن خرید کنید!</p>
 
             <span className="block">
               <h1 className="space-y-2 text-[29px] font-medium">
                 <span className="block  text-secondary ">
-                  Together on Your Journey to Wellness
+                  در کنار شما در مسیر سلامتی
                 </span>
                 <span className="block text-primary">
-                  Achieve Your Health Goals Today!
+                  امروز به اهداف سلامتی خود برسید!
                 </span>
               </h1>
             </span>
             <p className="text-zinc-600 pb-1">
-              The biggest auction of the Fitland season, go now and buy products
-              with an amazing discount!
+              بزرگترین حراج فصل فیت‌لند، همین حالا بروید و محصولات را با تخفیف فوق‌العاده خریداری کنید!
             </p>
 
             <Button
               variant={"secondary"}
               className="text-white py-5 font font-semibold "
             >
-              View products <ArrowRightCircle className="font-medium" />
+              مشاهده محصولات <ArrowRightCircle className="font-medium" />
             </Button>
           </div>
 
@@ -56,31 +55,31 @@ function HeroSection() {
           </div>
 
           <ul className=" space-y-5 text-secondary font-medium text-[18px] max-lg:hidden">
-            <li className="flex items-center justify-end gap-5">
-              <span className="flex flex-col items-end justify-center">
-                <p>+ 300</p>
-                <p className="text-zinc-900">Variety of Products</p>
-              </span>
+            <li className="flex items-center justify-start gap-5">
               <Image
                 src={"/svg/store-svgrepo-com(1).svg"}
                 alt="store-icon"
                 width={41}
                 height={41}
               />
-            </li>
-            <li className="flex items-center justify-end gap-5">
-              <span className="flex flex-col items-end justify-center">
-                <p>95%</p>
-                <p className="text-zinc-900">Customer Satisfaction</p>
+              <span className="flex flex-col items-start justify-center">
+                <p>+ 300</p>
+                <p className="text-zinc-900">تنوع محصولات</p>
               </span>
+            </li>
+            <li className="flex items-center justify-start gap-5">
               <ThumbsUp width={31} height={31} />
-            </li>
-            <li className="flex items-center justify-end gap-5">
-              <span className="flex flex-col items-end justify-center">
-                <p>4 Days</p>
-                <p className="text-zinc-900">From Purchase to Delivery</p>
+              <span className="flex flex-col items-start justify-center">
+                <p>95%</p>
+                <p className="text-zinc-900">رضایت مشتریان</p>
               </span>
+            </li>
+            <li className="flex items-center justify-start gap-5">
               <CalendarDaysIcon width={31} height={31} />
+              <span className="flex flex-col items-start justify-center">
+                <p>4 روز</p>
+                <p className="text-zinc-900">از خرید تا تحویل</p>
+              </span>
             </li>
           </ul>
         </div>

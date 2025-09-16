@@ -5,8 +5,8 @@ export default async function RegisterPage() {
   return (
     <>
       <TitleAuth
-        title="Create to your account"
-        description="Enter your email below to create to your account"
+        title="ایجاد حساب کاربری"
+        description="ایمیل خود را وارد کنید تا حساب کاربری جدید ایجاد کنید"
       />
 
       <RegisterForm />

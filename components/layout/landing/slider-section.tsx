@@ -21,9 +21,9 @@ function SliderSection({ title, cardData, url, nameBtn }: Props) {
 
       <div className="flex items-center justify-center flex-col">
         <div className="w-full mb-2.5 max-md:hidden">
-          <span className="w-full max-md:max-w-xs max-lg:max-w-[41rem] max-w-[57rem] block mx-auto ps-4">
+          <span className="w-full max-md:max-w-xs max-lg:max-w-[41rem] max-w-[57rem] block mx-auto pe-4">
             <Link href={url || "#"}>
-              <MyButtonLink name={nameBtn || "view all"} />
+              <MyButtonLink name={nameBtn || "مشاهده همه"} />
             </Link>
           </span>
         </div>

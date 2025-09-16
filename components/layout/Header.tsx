@@ -6,23 +6,23 @@ import Link from "next/link";
 import SideBar from "./landing/side-bar";
 
 const firstList = [
-  { id: 1, src: "/svg/star.svg", alt: "icon", label: "latest products"  , url:'/shop'},
-  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "special discounts"  , url:'/shop'},
+  { id: 1, src: "/svg/star.svg", alt: "icon", label: "جدیدترین محصولات"  , url:'/shop'},
+  { id: 2, src: "/svg/rad.svg", alt: "icon", label: "تخفیف‌های ویژه"  , url:'/shop'},
   {
     id: 3,
     src: null,
     alt: "icon",
-    label: "best sellers",
+    label: "پرفروش‌ترین‌ها",
     icon: <Award width={19} height={19} className="text-primary" />,
      url:'/shop'
   },
 ];
 
 const secondList = [
-  { id: 1, label: "masculine" , url:'/shop' },
-  { id: 2, label: "feminine"  , url:'/shop'},
-  { id: 3, label: "childish"  , url:'/shop'},
-  { id: 4, label: "sports equipment"  , url:'/shop'},
+  { id: 1, label: "مردانه" , url:'/shop' },
+  { id: 2, label: "زنانه"  , url:'/shop'},
+  { id: 3, label: "کودک"  , url:'/shop'},
+  { id: 4, label: "تجهیزات ورزشی"  , url:'/shop'},
 ];
 
 function Header() {
@@ -36,8 +36,8 @@ function Header() {
           <Link href={'/login'}>
           <Button variant={"outline"} className="rounded-lg">
             <User className="text-zinc-500" />
-            <span className="border-r pr-2 border-zinc-300">Login</span>
-            <span>Rigister</span>
+            <span className="border-l pl-2 border-zinc-300">ورود</span>
+            <span>ثبت نام</span>
           </Button>
           </Link>
         </div>

@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRightCircle } from "lucide-react";
 
 const baseDiscountCard: CardType = {
-  name: "Nike sports set",
+  name: "ست ورزشی نایکی",
   imageHeader: "/image/Rectangle 1166(1).jpg",
   price: 400,
   minSize: "lg",
@@ -38,7 +38,7 @@ const discountDataSection: CardType[] = Array.from(
   })
 );
 const baseNewShose: CardType = {
-  name: "Nike shoes model S-2000",
+  name: "کفش نایکی مدل S-2000",
   price: 400,
   imageHeader: "/image/Rectangle 1166(3).png",
   minSize: "l",
@@ -59,7 +59,7 @@ const newShoseDataSection: CardType[] = Array.from(
 );
 
 const baseBicycle: CardType = {
-  name: "Nike shoes model S-2000",
+  name: "دوچرخه ورزشی مدل B-2000",
   price: 400,
   imageHeader: "/image/bicycle(1).jpg",
   color: ["bg-zinc-900", "bg-zinc-100", "bg-zinc-900"],
@@ -83,39 +83,39 @@ function Body() {
       <BanerSection
         image={"/image/view-all-products.jpg"}
         href={""}
-        lightTitle="for good mood"
-        boldTitle="Get Baners and fitness equipment"
+        lightTitle="برای حال خوب"
+        boldTitle="بنرها و تجهیزات ورزشی تهیه کنید"
       />
       {/* this just gap */}
       <span className="block max-md:py-0.5"></span>
 
       <SliderSection
         cardData={discountDataSection}
-        title="Special Discount"
+        title="تخفیف ویژه"
         url=""
       />
       <SliderSection
         cardData={newShoseDataSection}
-        title="latest sports shoes"
+        title="جدیدترین کفش‌های ورزشی"
         url=""
       />
 
       <BanerSection
-        lightTitle="To enjoy the route"
-        boldTitle="Get a bike, skate and scooter"
+        lightTitle="برای لذت بردن از مسیر"
+        boldTitle="دوچرخه، اسکیت و اسکوتر تهیه کنید"
         href=""
         image="/image/cyclist.jpg"
       />
 
       <SliderSection
         cardData={bicycleDataSection}
-        title="Special Discount"
+        title="تخفیف ویژه"
         url=""
       />
 
       <article className="max-w-md md:max-w-5xl lg:max-w-5xl mx-auto">
         <div className="w-full text-center pb-12">
-          <h2 className="title-section">Latest in sports news</h2>
+          <h2 className="title-section">آخرین اخبار ورزشی</h2>
         </div>
               
         <div className="flex items-center lg:justify-between justify-center w-full gap-x-5 max-lg:gap-y-12 max-lg:flex-wrap *:w-1/2 max-md:*:w-full">
@@ -133,17 +133,14 @@ function Body() {
             </CardHeader>
             <CardContent className="pt-5 space-y-3">
               <CardTitle>
-                Australia&lsquo;s defeat in the first step of the Women&lsquo;s
-                World Cup!
+                شکست استرالیا در اولین قدم جام جهانی زنان!
               </CardTitle>
               <CardDescription className="text-black">
-              The news indicates that the president of the football federation
-              announced that every football player&lsquo;s salary will be
-              increased by 50% in the current season.
+                اخبار حاکی از آن است که رئیس فدراسیون فوتبال اعلام کرد که حقوق هر بازیکن فوتبال در فصل جاری 50% افزایش خواهد یافت.
               </CardDescription>
             </CardContent>
             <CardFooter>
-              <Button variant={"default"}>View the news <ArrowRightCircle/></Button>
+              <Button variant={"default"}>مشاهده خبر <ArrowRightCircle/></Button>
             </CardFooter>
           </Card>
           <Card className="rounded-lg h-[30rem] border-zinc-300">
@@ -159,16 +156,14 @@ function Body() {
             </CardHeader>
             <CardContent className="pt-5 space-y-3">
               <CardTitle>
-                Australia&lsquo;s defeat in the first step of the Women&lsquo;s
-                World Cup!
+                شکست استرالیا در اولین قدم جام جهانی زنان!
               </CardTitle>
               <CardDescription className="text-black">
-                The teams competed against each other on the first day of the
-                Women&lsquo;s World Cup in Madrid, Spain.
+                تیم‌ها در اولین روز جام جهانی زنان در مادرید، اسپانیا با یکدیگر به رقابت پرداختند.
               </CardDescription>
             </CardContent>
             <CardFooter>
-              <Button variant={"default"}>View the news <ArrowRightCircle/></Button>
+              <Button variant={"default"}>مشاهده خبر <ArrowRightCircle/></Button>
             </CardFooter>
           </Card>
         </div>

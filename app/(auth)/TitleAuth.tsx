@@ -1,6 +1,6 @@
 function TitleAuth({
-  title = "Login to your account",
-  description = "Enter your email below to login to your account",
+  title = "ورود به حساب کاربری",
+  description = "ایمیل خود را وارد کنید تا وارد حساب کاربری شوید",
 }) {
   return (
     <>

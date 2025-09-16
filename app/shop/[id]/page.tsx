@@ -35,7 +35,7 @@ async function SinglePageProduct({ params }: NextPageProps) {
                 </svg>
               </span>
             </div>
-            <p className="text-sm text-muted-foreground">Basketball shoes</p>
+            <p className="text-sm text-muted-foreground">کفش بسکتبال</p>
           </span>
 
           <div className="flex flex-col w-full space-y-2">

@@ -12,11 +12,11 @@ import React from "react";
 import cardData from "./card-data";
 import Layout from "@/components/layout/Layout";
 const linksCategory = [
-  { label: "cheapest", query: "cheapest" },
-  { label: "most expensive", query: "most-expensive" },
-  { label: "best seller", query: "best-seller" },
-  { label: "newest", query: "newest" },
-  { label: "most visited", query: "most-visited" },
+  { label: "ارزان‌ترین", query: "cheapest" },
+  { label: "گران‌ترین", query: "most-expensive" },
+  { label: "پرفروش‌ترین", query: "best-seller" },
+  { label: "جدیدترین", query: "newest" },
+  { label: "پربازدیدترین", query: "most-visited" },
 ];
 
 async function ShopPage({ searchParams }: { searchParams: SearchParams }) {

@@ -12,16 +12,16 @@ import {
 
 const FOOTER_DATA = [
   {
-    title: "Sports Products",
-    items: ["Football", "Dumbbells", "Running Shoes"],
+    title: "محصولات ورزشی",
+    items: ["فوتبال", "دمبل", "کفش دویدن"],
   },
   {
-    title: "Categories",
-    items: ["Running", "Bodybuilding", "Team Sports"],
+    title: "دسته‌بندی‌ها",
+    items: ["دویدن", "بدنسازی", "ورزش‌های تیمی"],
   },
   {
-    title: "Brands",
-    items: ["Nike", "Adidas", "Puma"],
+    title: "برندها",
+    items: ["نایکی", "آدیداس", "پوما"],
   },
 ];
 
@@ -70,7 +70,7 @@ function Footer() {
 
         <div className="max-sm:w-full w-1/2 flex items-end justify-center max-sm:items-center flex-col gap-3">
           <div className="space-y-5">
-            <p className="text-base">Follow us for more discounts!</p>
+            <p className="text-base">برای تخفیف‌های بیشتر ما را دنبال کنید!</p>
             <ul className="flex-center gap-9">
               <li className="">
                 <Link
@@ -163,17 +163,17 @@ function Footer() {
 
           <form className="space-y-2 pt-2 max-sm:w-full w-3/4">
             <Label htmlFor="f1d5" className="text-white text-base font-medium">
-              Fitland newsletter
+              خبرنامه فیت‌لند
             </Label>
             <div className="flex gap-2">
               <Input
                 id={"f1d5"}
                 className="flex-1 w-full"
-                placeholder="Email"
+                placeholder="ایمیل"
                 type="email"
               />
               <Button variant="default" className="">
-                Send
+                ارسال
               </Button>
             </div>
           </form>
@@ -182,14 +182,14 @@ function Footer() {
 
       <div className="border-t border-zinc-500 pt-3">
         <p className="space-x-1">
-          <span className="text-zinc-300">Made by</span>
+          <span className="text-zinc-300">ساخته شده توسط</span>
           <span className="text-blue-300 *:px-1">
             <Link href={"/"} className="underline">
-              Ali Abdi
+              علی عبدی
             </Link>{" "}
-            of{" "}
+            از{" "}
             <Link href={"/"} className="underline">
-              Loratech team
+              تیم لوراتک
             </Link>
           </span>
         </p>

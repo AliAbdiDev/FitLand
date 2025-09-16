@@ -31,7 +31,7 @@ function DetailProduct() {
   return (
     <div className="space-y-5">
       <span className="max-w-sm block">
-        <p className="text-xl">Size:</p>
+        <p className="text-xl">سایز:</p>
         <div className="text-center text-xs w-full pt-2 text-black grid grid-cols-3 gap-2 *:duration-150 *:py-2 *:rounded-md *:px-3">
           {["S", "L", "M", "XL", "XXL"].map((size, index) => (
             <button
@@ -55,12 +55,12 @@ function DetailProduct() {
       </span>
 
       <span className="block">
-        <p className="text-xl">Color:</p>
+        <p className="text-xl">رنگ:</p>
         <div className="flex items-center gap-2 pt-2">
           {[
-            { lable: "red", color: "bg-red-600" },
-            { lable: "green", color: "bg-green-600" },
-            { lable: "zinc", color: "bg-zinc-600" },
+            { lable: "قرمز", color: "bg-red-600" },
+            { lable: "سبز", color: "bg-green-600" },
+            { lable: "خاکستری", color: "bg-zinc-600" },
           ]?.map((items, index) => (
             <button
               onClick={() =>
@@ -125,7 +125,7 @@ function DetailProduct() {
               className="w-full"
               onClick={() => console.info(state)}
             >
-              Add to Cart
+              افزودن به سبد خرید
             </Button>
           </li>
 
@@ -175,9 +175,9 @@ const DialogComponent = memo(
       >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Share link</DialogTitle>
+            <DialogTitle>اشتراک‌گذاری لینک</DialogTitle>
             <DialogDescription>
-              Anyone who has this link will be able to view this.
+              هر کسی که این لینک را داشته باشد می‌تواند این محصول را ببیند.
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center space-x-2">
@@ -192,7 +192,7 @@ const DialogComponent = memo(
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
-                Close
+                بستن
               </Button>
             </DialogClose>
           </DialogFooter>
