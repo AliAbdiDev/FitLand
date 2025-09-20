@@ -9,6 +9,10 @@ const config: Config = {
 	],
 	theme: {
     	extend: {
+    		fontFamily: {
+    			'yekan': ['var(--font-yekan-bakh)', 'Tahoma', 'Arial', 'sans-serif'],
+    			'sans': ['var(--font-yekan-bakh)', 'Tahoma', 'Arial', 'sans-serif'],
+    		},
     		gridTemplateColumns: {
     			'fit-230': 'repeat(auto-fit, minmax(230px, 1fr))',
     			'fill-230': 'repeat(auto-fill, minmax(230px, 1fr))'

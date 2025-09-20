@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Tahoma', 'Arial', 'Helvetica', sans-serif;
+  font-family: var(--font-yekan-bakh), 'Tahoma', 'Arial', 'Helvetica', sans-serif;
   direction: rtl;
   text-align: right;
 }
@@ -16,6 +16,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .font-yekan {
+    font-family: var(--font-yekan-bakh), 'Tahoma', 'Arial', sans-serif;
+  }
+  .font-yekan-bold {
+    font-family: var(--font-yekan-bakh), 'Tahoma', 'Arial', sans-serif;
+    font-weight: 700;
+  }
+  .font-yekan-black {
+    font-family: var(--font-yekan-bakh), 'Tahoma', 'Arial', sans-serif;
+    font-weight: 900;
   }
 }
 
