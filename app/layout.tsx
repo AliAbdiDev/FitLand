@@ -2,6 +2,30 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 import { ReduxProvider } from "@/components/providers";
+import localFont from 'next/font/local';
+
+// تعریف فونت‌های فارسی
+const yekanBakh = localFont({
+  src: [
+    {
+      path: './fonts/YekanBakh-Regular.woff',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/YekanBakh-Bold.woff',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: './fonts/YekanBakh-ExtraBlack.woff',
+      weight: '900',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-yekan-bakh',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "فیت‌لند - فروشگاه ورزشی",
@@ -14,8 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl">
-      <body >
+    <html lang="fa" dir="rtl" className={yekanBakh.variable}>
+      <body className={yekanBakh.className}>
         <ReduxProvider>{children}</ReduxProvider>
         <Toaster 
         duration={4000}
