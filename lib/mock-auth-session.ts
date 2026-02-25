@@ -4,6 +4,10 @@ export type MockAuthUserCookie = {
   id: string;
   email: string;
   name?: string;
+  family?: string;
+  phoneNumber?: string;
+  address?: string;
+  imageUrl?: string;
   role?: string;
 };
 
@@ -35,14 +39,19 @@ export const decodeMockAuthUserCookie = (value?: string | null) => {
       return null;
     }
 
+    const safeValue = (input: unknown) => (typeof input === "string" ? input : "");
+
     return {
       id: parsed.id,
       email: parsed.email,
-      name: parsed.name || "",
-      role: parsed.role || "user",
+      name: safeValue(parsed.name),
+      family: safeValue(parsed.family),
+      phoneNumber: safeValue(parsed.phoneNumber),
+      address: safeValue(parsed.address),
+      imageUrl: safeValue(parsed.imageUrl),
+      role: safeValue(parsed.role) || "user",
     } satisfies MockAuthUserCookie;
   } catch {
     return null;
   }
 };
-

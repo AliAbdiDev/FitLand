@@ -1,14 +1,21 @@
-﻿import Link from "next/link";
+﻿import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { FileText, LogOut, PencilLine, ShieldCheck, UserRound } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import ProfileLatestSeenProducts from "@/components/profile/ProfileLatestSeenProducts";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { clearAuthCookie, clearAuthUserCookie, AUTH_COOKIE_NAME } from "@/app/api/lib/auth";
+import ProfileDashboardClient, {
+  type ProfileSection,
+} from "@/components/profile/ProfileDashboardClient";
+import {
+  AUTH_COOKIE_NAME,
+  clearAuthCookie,
+  clearAuthUserCookie,
+  createMockAccessToken,
+  setAuthCookie,
+  setAuthUserCookie,
+} from "@/app/api/lib/auth";
 import { AUTH_USER_COOKIE_NAME, decodeMockAuthUserCookie } from "@/lib/mock-auth-session";
+import type { SearchParams } from "@/types/next";
 
 const mockInvoices = [
   { id: "INV-1404-001", date: "۱۴۰۴/۱۲/۰۱", total: "۱,۳۵۰,۰۰۰ تومان", status: "پرداخت شده" },
@@ -16,18 +23,112 @@ const mockInvoices = [
   { id: "INV-1404-003", date: "۱۴۰۴/۱۰/۳۰", total: "۴۲۰,۰۰۰ تومان", status: "تکمیل شده" },
 ];
 
-export default async function ProfilePage() {
+function getFirstValue(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function normalizeSection(value: string | undefined): ProfileSection {
+  if (value === "edit" || value === "invoices" || value === "latest") {
+    return value;
+  }
+
+  return "latest";
+}
+
+function getFormString(formData: FormData, key: string, maxLength = 500) {
+  const value = formData.get(key);
+  const normalized = typeof value === "string" ? value.trim() : "";
+  return normalized.slice(0, maxLength);
+}
+
+function normalizeImageUrl(value: string) {
+  if (!value) {
+    return "";
+  }
+
+  try {
+    const url = new URL(value);
+
+    if (url.protocol !== "http:" && url.protocol !== "https:") {
+      return "";
+    }
+
+    return url.toString();
+  } catch {
+    return "";
+  }
+}
+
+function sanitizeFileName(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function getImageExtensionFromMimeType(mimeType: string) {
+  if (mimeType === "image/jpeg") {
+    return "jpg";
+  }
+
+  if (mimeType === "image/webp") {
+    return "webp";
+  }
+
+  return "png";
+}
+
+async function persistProfileImageDataUrl({
+  imageDataUrl,
+  imageFileName,
+  userId,
+}: {
+  imageDataUrl: string;
+  imageFileName: string;
+  userId: string;
+}) {
+  if (!imageDataUrl.startsWith("data:image/")) {
+    return "";
+  }
+
+  const match = imageDataUrl.match(/^data:(image\/(?:png|jpeg|webp));base64,(.+)$/);
+
+  if (!match) {
+    return "";
+  }
+
+  const [, mimeType, base64Data] = match;
+
+  if (!base64Data) {
+    return "";
+  }
+
+  const uploadDir = path.join(process.cwd(), "public", "uploads", "profile");
+  await mkdir(uploadDir, { recursive: true });
+
+  const baseName =
+    sanitizeFileName(imageFileName.replace(/\.[^.]+$/, "")) || `user-${userId}`;
+  const fileName = `${baseName}-${Date.now()}.${getImageExtensionFromMimeType(mimeType)}`;
+  const outputPath = path.join(uploadDir, fileName);
+
+  await writeFile(outputPath, Buffer.from(base64Data, "base64"));
+
+  return `/uploads/profile/${fileName}`;
+}
+
+export default async function ProfilePage({ searchParams }: { searchParams: SearchParams }) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get(AUTH_COOKIE_NAME)?.value;
   const authUserCookie = cookieStore.get(AUTH_USER_COOKIE_NAME)?.value;
   const authUser = decodeMockAuthUserCookie(authUserCookie);
+  const rawSearch = await searchParams;
+  const initialSection = normalizeSection(getFirstValue(rawSearch?.section));
+  const profileSaved = getFirstValue(rawSearch?.saved) === "1";
 
   if (!accessToken || !authUser) {
     redirect("/login");
   }
-
-  const userLabel = authUser.name?.trim() || authUser.email;
-  const userInitial = (userLabel || "ک").trim().charAt(0).toUpperCase();
 
   async function logoutAction() {
     "use server";
@@ -37,120 +138,79 @@ export default async function ProfilePage() {
     redirect("/");
   }
 
+  async function saveProfileAction(formData: FormData) {
+    "use server";
+
+    const cookieStore = await cookies();
+    const currentAccessToken = cookieStore.get(AUTH_COOKIE_NAME)?.value;
+    const currentAuthUserCookie = cookieStore.get(AUTH_USER_COOKIE_NAME)?.value;
+    const currentAuthUser = decodeMockAuthUserCookie(currentAuthUserCookie);
+
+    if (!currentAccessToken || !currentAuthUser) {
+      redirect("/login");
+    }
+
+    const firstName = getFormString(formData, "firstName", 80);
+    const family = getFormString(formData, "family", 120);
+    const email = getFormString(formData, "email", 180).toLowerCase() || currentAuthUser.email;
+    const phoneNumber = getFormString(formData, "phoneNumber", 32);
+    const address = getFormString(formData, "address", 500);
+    const imageUrlInput = getFormString(formData, "imageUrl", 500);
+    const imageDataUrl = getFormString(formData, "imageDataUrl", 1_500_000);
+    const imageFileName = getFormString(formData, "imageFileName", 200);
+
+    let imageUrl = normalizeImageUrl(imageUrlInput);
+
+    if (imageDataUrl) {
+      const uploadedImagePath = await persistProfileImageDataUrl({
+        imageDataUrl,
+        imageFileName,
+        userId: currentAuthUser.id,
+      });
+
+      if (uploadedImagePath) {
+        imageUrl = uploadedImagePath;
+      }
+    }
+
+    const tokenDisplayName =
+      [firstName, family].filter(Boolean).join(" ") ||
+      [currentAuthUser.name, currentAuthUser.family].filter(Boolean).join(" ") ||
+      "";
+
+    await setAuthCookie(
+      createMockAccessToken({
+        email,
+        name: tokenDisplayName,
+        role: currentAuthUser.role,
+        sub: currentAuthUser.id,
+      })
+    );
+
+    await setAuthUserCookie({
+      ...currentAuthUser,
+      email,
+      name: firstName,
+      family,
+      phoneNumber,
+      address,
+      imageUrl,
+    });
+
+    redirect("/profile?section=edit&saved=1");
+  }
+
   return (
     <Layout>
       <main className="mx-auto min-h-screen w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="space-y-6">
-          <Card className="rounded-2xl border-border shadow-sm">
-            <CardContent className="p-6">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-4">
-                  <Avatar className="size-14 border border-border">
-                    <AvatarFallback className="text-base font-bold text-foreground">
-                      {userInitial}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-1">
-                    <h1 className="text-xl font-bold text-foreground">پروفایل کاربر</h1>
-                    <p className="text-sm text-muted-foreground">{userLabel}</p>
-                    <p className="text-xs text-muted-foreground">نقش: {authUser.role || "user"}</p>
-                  </div>
-                </div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-sm text-emerald-700">
-                  <ShieldCheck className="size-4" />
-                  حساب فعال
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            <div className="space-y-6">
-              <Card className="rounded-2xl border-border shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-base">آیتم‌های پروفایل</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Link
-                    href="#profile-detail"
-                    className="flex items-center justify-between rounded-lg border border-border px-4 py-3 text-sm text-foreground transition hover:bg-muted"
-                  >
-                    <span className="flex items-center gap-2">
-                      <UserRound className="size-4 text-muted-foreground" />
-                      ویرایش جزئیات پروفایل
-                    </span>
-                    <PencilLine className="size-4 text-muted-foreground" />
-                  </Link>
-
-                  <Link
-                    href="#invoices"
-                    className="flex items-center justify-between rounded-lg border border-border px-4 py-3 text-sm text-foreground transition hover:bg-muted"
-                  >
-                    <span className="flex items-center gap-2">
-                      <FileText className="size-4 text-muted-foreground" />
-                      مشاهده فاکتورهای فروش
-                    </span>
-                    <span className="text-xs text-muted-foreground">{mockInvoices.length} مورد</span>
-                  </Link>
-
-                  <form action={logoutAction}>
-                    <Button type="submit" variant="destructive" className="w-full rounded-lg">
-                      <LogOut className="size-4" />
-                      خروج از حساب
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-
-              <Card id="profile-detail" className="rounded-2xl border-border shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-base">جزئیات پروفایل</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-sm">
-                  <div className="rounded-lg border border-border px-4 py-3">
-                    <p className="text-xs text-muted-foreground">نام کاربر</p>
-                    <p className="mt-1 font-medium text-foreground">{authUser.name || "ثبت نشده"}</p>
-                  </div>
-                  <div className="rounded-lg border border-border px-4 py-3">
-                    <p className="text-xs text-muted-foreground">ایمیل</p>
-                    <p className="mt-1 font-medium text-foreground">{authUser.email}</p>
-                  </div>
-                  <Button type="button" variant="outline" className="w-full rounded-lg">
-                    <PencilLine className="size-4" />
-                    ویرایش جزئیات پروفایل
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card id="invoices" className="rounded-2xl border-border shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-base">فاکتورهای فروش</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {mockInvoices.map((invoice) => (
-                    <div
-                      key={invoice.id}
-                      className="rounded-lg border border-border px-4 py-3 text-sm"
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <p className="font-semibold text-foreground">{invoice.id}</p>
-                        <span className="text-xs text-muted-foreground">{invoice.date}</span>
-                      </div>
-                      <div className="mt-2 flex items-center justify-between gap-3 text-muted-foreground">
-                        <span>{invoice.total}</span>
-                        <span>{invoice.status}</span>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="space-y-6">
-              <ProfileLatestSeenProducts />
-            </div>
-          </div>
-        </div>
+        <ProfileDashboardClient
+          authUser={authUser}
+          invoices={mockInvoices}
+          initialSection={initialSection}
+          profileSaved={profileSaved}
+          saveProfileAction={saveProfileAction}
+          logoutAction={logoutAction}
+        />
       </main>
     </Layout>
   );

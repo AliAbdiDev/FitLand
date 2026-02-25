@@ -2,17 +2,23 @@
 
 import Link from "next/link";
 import React from "react";
-import { MyProductCard, MyProductCardMobileSize } from "@/components/my-components/my-product-card";
+import {
+  MyProductCardMobileSize,
+} from "@/components/my-components/my-product-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { mockSportProducts } from "@/app/shop/mock-sport-products";
 import { useRecentlyViewedProductsStore } from "@/stores/recently-viewed-products-store";
 
-const productsById = new Map(mockSportProducts.map((product) => [product.id, product]));
+const productsById = new Map(
+  mockSportProducts.map((product) => [product.id, product]),
+);
 
 export default function ProfileLatestSeenProducts() {
-  const productIds = useRecentlyViewedProductsStore((state) => state.productIds);
+  const productIds = useRecentlyViewedProductsStore(
+    (state) => state.productIds,
+  );
   const clearViewedProducts = useRecentlyViewedProductsStore(
-    (state) => state.clearViewedProducts
+    (state) => state.clearViewedProducts,
   );
   const [mounted, setMounted] = React.useState(false);
 
@@ -25,8 +31,10 @@ export default function ProfileLatestSeenProducts() {
       productIds
         .slice(0, 10)
         .map((id) => productsById.get(id))
-        .filter((product): product is NonNullable<typeof product> => Boolean(product)),
-    [productIds]
+        .filter((product): product is NonNullable<typeof product> =>
+          Boolean(product),
+        ),
+    [productIds],
   );
 
   return (
@@ -41,7 +49,7 @@ export default function ProfileLatestSeenProducts() {
           پاک کردن
         </button>
       </CardHeader>
-      <CardContent>
+      <CardContent className=" max-h-[853px] overflow-y-auto">
         {!mounted ? (
           <p className="text-sm text-muted-foreground">در حال بارگذاری...</p>
         ) : latestProducts.length === 0 ? (
@@ -49,16 +57,19 @@ export default function ProfileLatestSeenProducts() {
             هنوز محصولی مشاهده نکرده‌اید.
           </p>
         ) : (
-          <div className="grid max-sm:grid-cols-1 max-[1260px]:grid-cols-2 min-[1260px]:grid-cols-3 gap-3">
+          <div className="flex items-center justify-between flex-col gap-8 ">
             {latestProducts.map((product) => (
-              <React.Fragment key={product.id}>
-                <Link href={`/shop/${product.id}`} className="max-sm:hidden w-full block">
-                  <MyProductCard {...product} />
+                <Link href={`/shop/${product.id}`} className="w-full" key={product.id}>
+                  <MyProductCardMobileSize
+                    imageSrc={product.imageSrc}
+                    title={product.title}
+                    minSize="120px"
+                    maxSize="160px"
+                    price={product.price}
+                    discountedPrice={product.discountedPrice}
+                    numberActiveStars={product.numberActiveStars}
+                  />
                 </Link>
-                <Link href={`/shop/${product.id}`} className="sm:hidden block">
-                  <MyProductCardMobileSize {...product} />
-                </Link>
-              </React.Fragment>
             ))}
           </div>
         )}
