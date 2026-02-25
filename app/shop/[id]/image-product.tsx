@@ -49,7 +49,7 @@ function ImageProduct() {
             {/* main img */}
             <Image
               src={imgListData?.[0] || "/pic/img.png"}
-              alt="product image"
+              alt="تصویر محصول"
               width={200}
               height={200}
               className="size-full object-cover"
@@ -70,7 +70,7 @@ function ImageProduct() {
               >
                 <Image
                   src={src || "/pic/img.png"}
-                  alt="product image"
+                  alt="تصویر محصول"
                   className="object-contain size-full"
                   width={90}
                   height={90}
@@ -83,7 +83,7 @@ function ImageProduct() {
               onClick={() => handleImgClick({ src: imgListData[0], index: 0 })}
             >
               <ImageIcon />
-              <p className="text-xs text-center">More than +4 images</p>
+              <p className="text-xs text-center">بیشتر از +4 تصویر</p>
             </li>
           </ul>
         </div>
@@ -99,7 +99,7 @@ function ImageProduct() {
           key={"dialog-img"}
         >
           <DialogContent className="max-w-full max-h-full p-0 w-screen h-screen !rounded-t-none">
-            <DialogTitle className="sr-only">title</DialogTitle>
+            <DialogTitle className="sr-only">عنوان</DialogTitle>
             <ImgSlider
               activeIndex={state?.activIndex}
               setActiveIndex={setActiveIndex}

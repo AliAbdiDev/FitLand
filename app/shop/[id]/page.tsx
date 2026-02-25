@@ -3,6 +3,7 @@ import cardData from "../card-data";
 import DetailProduct from "./detial-product";
 import ImageProduct from "./image-product";
 import MobileImgSlider from "./mobile-img-slider";
+import TrackViewedProduct from "./TrackViewedProduct";
 
 async function SinglePageProduct({ params }: NextPageProps) {
   const { id } = await params;
@@ -11,6 +12,7 @@ async function SinglePageProduct({ params }: NextPageProps) {
 
   return (
     <main className="min-h-screen px-[5%] ">
+      <TrackViewedProduct productId={id} />
       
       <section className="flex items-center justify-center md:gap-7 w-full max-md:flex-col max-sm:mt-5">
         <ImageProduct />
@@ -39,9 +41,9 @@ async function SinglePageProduct({ params }: NextPageProps) {
           </span>
 
           <div className="flex flex-col w-full space-y-2">
-            <p className="text-2xl ">$50</p>
+            <p className="text-2xl ">۵۰ تومان</p>
             <span className="flex items-center gap-3">
-              <p className="text-muted-foreground line-through pe-3">$100</p>
+              <p className="text-muted-foreground line-through pe-3">۱۰۰ تومان</p>
               <span className="rounded-lg bg-primary text-sm text-white px-2.5 py-1.5 size-fit text-center">
                 %50
               </span>

@@ -1,35 +1,109 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import { CardType } from "@/types/card";
-import Autoplay from "embla-carousel-autoplay";
+import type { KeenSliderPlugin } from "keen-slider/react";
+import { useKeenSlider } from "keen-slider/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import { useRef } from "react";
+import { useMemo } from "react";
 
 function MySlider({ cardData }: { cardData: CardType[] }) {
-  const plugin = useRef(Autoplay({ delay: 3000 }));
+  const autoplay = useMemo<KeenSliderPlugin>(
+    () => (slider) => {
+      let timeout: ReturnType<typeof setTimeout> | null = null;
+      let mouseOver = false;
+
+      const clearNextTimeout = () => {
+        if (!timeout) {
+          return;
+        }
+
+        clearTimeout(timeout);
+        timeout = null;
+      };
+
+      const nextTimeout = () => {
+        clearNextTimeout();
+
+        if (mouseOver || cardData.length <= 1) {
+          return;
+        }
+
+        timeout = setTimeout(() => {
+          slider.next();
+        }, 3000);
+      };
+
+      const onMouseEnter = () => {
+        mouseOver = true;
+        clearNextTimeout();
+      };
+
+      const onMouseLeave = () => {
+        mouseOver = false;
+        nextTimeout();
+      };
+
+      slider.on("created", () => {
+        slider.container.addEventListener("mouseenter", onMouseEnter);
+        slider.container.addEventListener("mouseleave", onMouseLeave);
+        nextTimeout();
+      });
+      slider.on("dragStarted", clearNextTimeout);
+      slider.on("animationEnded", nextTimeout);
+      slider.on("updated", nextTimeout);
+      slider.on("destroyed", () => {
+        slider.container.removeEventListener("mouseenter", onMouseEnter);
+        slider.container.removeEventListener("mouseleave", onMouseLeave);
+        clearNextTimeout();
+      });
+    },
+    [cardData.length]
+  );
+
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      rtl: true,
+      loop: cardData.length > 1,
+      slides: {
+        origin: "auto",
+        perView: 1,
+        spacing: 16,
+      },
+      breakpoints: {
+        "(min-width: 768px)": {
+          slides: {
+            origin: "auto",
+            perView: 2,
+            spacing: 16,
+          },
+        },
+        "(min-width: 1024px)": {
+          slides: {
+            origin: "auto",
+            perView: 3,
+            spacing: 16,
+          },
+        },
+      },
+    },
+    [autoplay]
+  );
+
+  if (!cardData?.length) {
+    return null;
+  }
 
   return (
-    <Carousel
-      plugins={[plugin.current]}
-      onMouseEnter={plugin.current.stop}
-      onMouseLeave={() => plugin.current.play()}
-      opts={{
-        align: "start",
-        loop: true,
-      }}
-      className="w-full max-md:max-w-xs max-lg:max-w-[41rem] max-w-[57rem]"
+    <div
+      dir="rtl"
+      className="relative w-full max-md:max-w-xs max-lg:max-w-[41rem] max-w-[57rem]"
     >
-      <CarouselContent className="-ml-1">
-        {cardData?.map((items, index) => (
-          <CarouselItem key={index} className="pl-4 max-sm:basis-full md:basis-1/2 lg:basis-1/3">
+      <div ref={sliderRef} className="keen-slider">
+        {cardData.map((items, index) => (
+          <div key={index} className="keen-slider__slide px-2 py-1">
             <Card className="rounded-xl p-0 m-1 border-zinc-300  h-[22rem] max-sm:max-w-[90%] mx-auto">
               <CardHeader className="p-0 overflow-hidden w-full rounded-t-xl -translate-y-1 border-none h-[12rem]">
                 <Image
@@ -44,10 +118,10 @@ function MySlider({ cardData }: { cardData: CardType[] }) {
 
               <CardContent className="flex items-start justify-center flex-col gap-3 px-4 py-5">
                 <div className="space-y-1.5">
-                  <CardTitle>{items?.name || "Null data Title"}</CardTitle>
-                  <p className="">${items?.price}</p>
+                  <CardTitle>{items?.name || "عنوان داده خالی"}</CardTitle>
+                  <p className="">{items?.price} تومان</p>
                   <p className="text-zinc-600 text-xs">
-                    from size {items?.minSize} to {items?.maxSize}
+                    از سایز {items?.minSize} تا {items?.maxSize}
                   </p>
                 </div>
                 <div className="flex -space-x-[0.525rem] *:block *:rounded-full *:ring-2 *:ring-background *:size-5">
@@ -61,10 +135,10 @@ function MySlider({ cardData }: { cardData: CardType[] }) {
                       <Image
                         key={index}
                         src={img || "/image/pic"}
-                        alt="pic-prudocts"
+                        alt="تصویر محصولات"
                         loading="lazy"
                         placeholder="blur"
-                        blurDataURL={img||''}
+                        blurDataURL={img || ""}
                         width={20}
                         height={20}
                       />
@@ -73,17 +147,35 @@ function MySlider({ cardData }: { cardData: CardType[] }) {
                 )}
               </CardContent>
             </Card>
-          </CarouselItem>
+          </div>
         ))}
-      </CarouselContent>
+      </div>
 
-      {(cardData?.length > 0 || cardData) && (
+      {cardData.length > 1 && (
         <>
-          <CarouselPrevious className="max-sm:hidden" />
-          <CarouselNext className="max-sm:hidden" />
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => instanceRef.current?.prev()}
+            className="absolute right-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-background/90 max-sm:hidden"
+            aria-label="Slide previous"
+          >
+            <ChevronRight className="size-4" />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => instanceRef.current?.next()}
+            className="absolute left-2 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-background/90 max-sm:hidden"
+            aria-label="Slide next"
+          >
+            <ChevronLeft className="size-4" />
+          </Button>
         </>
       )}
-    </Carousel>
+    </div>
   );
 }
 

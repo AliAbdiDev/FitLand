@@ -1,12 +1,11 @@
 'use client';
 
 import MyTagInput from "@/components/my-components/my-tag-input";
-import { sizeProduct } from "@/redux/shop-filters-slice";
-import { AppDispatch, RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
 import ColorSelector from "./color-selector";
 import InputRangePrice from "./input-range-price";
 import { cn } from "@/lib/utils";
+import { useShopFiltersStore } from "@/stores/shop-filters-store";
+import { useShallow } from "zustand/react/shallow";
 import {
     Accordion,
     AccordionContent,
@@ -15,25 +14,24 @@ import {
   } from "@/components/ui/accordion";
 
 function FilterAccardion({setTagInputValue,tagInputRef}) {
-    const dispatch: AppDispatch = useDispatch();
-    const filtersValue = useSelector((state: RootState) => state.shopFilters);
+    const filtersValue = useShopFiltersStore(
+      useShallow((state) => ({
+        range: state.range,
+        colorSelected: state.colorSelected,
+        sizeSelected: state.sizeSelected,
+      }))
+    );
+    const setSizeProduct = useShopFiltersStore((state) => state.sizeProduct);
     const AccardionData = [
         {
           title: "Price:",
           value: "1",
-          accardionContent: (
-            <InputRangePrice shopStateValue={filtersValue} dispatch={dispatch} />
-          ),
+          accardionContent: <InputRangePrice />,
         },
         {
           title: "Color:",
           value: "2",
-          accardionContent: (
-            <ColorSelector
-              colorValue={filtersValue.colorSelected}
-              dispatch={dispatch}
-            />
-          ),
+          accardionContent: <ColorSelector />,
         },
         {
           title: "Size:",
@@ -46,9 +44,9 @@ function FilterAccardion({setTagInputValue,tagInputRef}) {
                   type="button"
                   onClick={() => {
                     if (size.includes("remove")) {
-                      dispatch(sizeProduct({ size: "" }));
+                      setSizeProduct({ size: "" });
                     } else {
-                      dispatch(sizeProduct({ size }));
+                      setSizeProduct({ size });
                     }
                   }}
                   className={cn(
@@ -70,7 +68,7 @@ function FilterAccardion({setTagInputValue,tagInputRef}) {
           accardionContent: (
             <MyTagInput
               placeholder="Add tags"
-              tags={[{ id: "ff", text: "Nike" }]}
+              tags={[]}
               ref={tagInputRef}
               getInputvalue={(value) => setTagInputValue(value)}
             />

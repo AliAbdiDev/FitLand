@@ -51,7 +51,7 @@ function RegisterForm() {
               id="email"
               name="email"
               type="email"
-              placeholder="example@email.com"
+              placeholder="ایمیل@example.com"
               required
             />
           </div>

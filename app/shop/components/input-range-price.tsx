@@ -2,43 +2,43 @@
 
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { initialState, rengeInput } from "@/redux/shop-filters-slice";
-import { AppDispatch } from "@/redux/store";
 import React, { memo } from "react";
+import {
+  initialShopFiltersState,
+  useShopFiltersStore,
+} from "@/stores/shop-filters-store";
 
-interface Props {
-  shopStateValue: { range: number[] };
-  dispatch: AppDispatch;
-}
+const InputRangePrice = () => {
+  const range = useShopFiltersStore((state) => state.range);
+  const updateRange = useShopFiltersStore((state) => state.rengeInput);
 
-const InputRangePrice = ({ shopStateValue, dispatch }: Props) => {
   const formatPrice = (price: number) => {
-    return price === initialState?.range[1]
-      ? `$${price.toLocaleString()}+`
-      : `$${price.toLocaleString()}`;
+    return price === initialShopFiltersState.range[1]
+      ? `${price.toLocaleString()} تومان+`
+      : `${price.toLocaleString()} تومان`;
   };
 
   return (
     <div className="space-y-3">
       <Label className="tabular-nums">
-        From {formatPrice(shopStateValue?.range[0])} to{" "}
-        {formatPrice(shopStateValue?.range[1])}
+        از {formatPrice(range?.[0])} تا {formatPrice(range?.[1])}
       </Label>
       <div className="flex items-center gap-4 py-2.5">
         <Slider
           name="price"
-          value={shopStateValue?.range as number[]}
+          value={range as number[]}
           onValueChange={(value) =>
-            dispatch(rengeInput({ maxValue: value[0], minValue: value[1] }))
+            updateRange({ maxValue: value[0], minValue: value[1] })
           }
-          min={initialState?.range[0]}
-          max={initialState?.range[1]}
-          aria-label="Price range slider"
+          min={initialShopFiltersState.range[0]}
+          max={initialShopFiltersState.range[1]}
+          aria-label="اسلایدر محدوده قیمت"
           className="h-1"
         />
       </div>
     </div>
   );
 };
+
 InputRangePrice.displayName = "InputRangePrice";
 export default memo(InputRangePrice);

@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Tahoma', 'Arial', 'Helvetica', sans-serif;
-  direction: rtl;
-  text-align: right;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -39,17 +33,17 @@ body {
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
-    --input: 0 4% 78%;
-    --ring: 0 0% 3.9%;
+    --input: 46 63% 86%;
+    --ring: 46 63% 86%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --theme-success: #10b981; 
-    --theme-error: #dc2626;  
-    --theme-warning: #facc15; 
-    --theme-info: #0ea5e9; 
+    --theme-success: #10b981;
+    --theme-error: #dc2626;
+    --theme-warning: #facc15;
+    --theme-info: #0ea5e9;
     --radius: 0.5rem;
   }
   .dark {
@@ -70,8 +64,8 @@ body {
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --input: 46 63% 86%;
+    --ring: 46 63% 86%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -83,6 +77,8 @@ body {
 @layer base {
   * {
     @apply border-border;
+    font-family:
+      var(--font-iranian-sans), "Tahoma", "Arial", "Helvetica", sans-serif;
   }
   body {
     @apply bg-background text-foreground;
@@ -99,7 +95,7 @@ body {
   .sticky-sidbar-wrapper {
     @apply sticky top-20 left-0 h-screen w-1/5 rounded-xl border border-zinc-300 text-black overflow-y-auto;
   }
-  .parent-color-product{
+  .parent-color-product {
     @apply flex -space-x-[0.525rem] *:block *:rounded-full *:ring-2 *:ring-background *:size-5;
   }
 }

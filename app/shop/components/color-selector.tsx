@@ -1,8 +1,7 @@
 "use client";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { colorSelector } from "@/redux/shop-filters-slice";
-import { AppDispatch } from "@/redux/store";
 import {memo } from "react";
+import { useShopFiltersStore } from "@/stores/shop-filters-store";
 
 const SELECT_COLORS = [
   {
@@ -48,23 +47,22 @@ const SELECT_COLORS = [
       "border-emerald-500 bg-emerald-500 data-[state=checked]:border-emerald-500 data-[state=checked]:bg-emerald-500",
   },
 ];
-const ColorSelector = 
-  ({ colorValue, dispatch }: { colorValue: string; dispatch: AppDispatch }) => {
-    console.info('colorValue',colorValue);
+const ColorSelector = () => {
+    const colorValue = useShopFiltersStore((state) => state.colorSelected);
+    const setColor = useShopFiltersStore((state) => state.colorSelector);
     return (
       <RadioGroup
         className="flex gap-0.5 *:max-[1060px]:!size-[1.45rem] min-[1110px]:gap-1 duration-150"
         value={colorValue}
         onValueChange={(value) => {
-          dispatch(colorSelector({color:value}));
-          console.info(value);
+          setColor({ color: value });
         }}
       >
         <button
           type="button"
           className="size-6 my-auto rounded-full border border-primary bg-zinc-200"
           onClick={() => {
-            dispatch(colorSelector({ color: '' }));
+            setColor({ color: "" });
           }}
         ></button>
         {SELECT_COLORS?.map((color) => (

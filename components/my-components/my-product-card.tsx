@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+﻿import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -15,7 +15,7 @@ export const RatingComponent = ({
         key={index}
         className={cn(
           "size-4 text-zinc-200",
-          index < Number(numberActiveStars) && "text-yellow-500"
+          index < Number(numberActiveStars) && "text-yellow-500",
         )}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@ function MyProductCard({
 }: Props) {
   return (
     <>
-      <Card className="text-black overflow-hidden">
-        <CardHeader className="p-0 max-h-72 w-full overflow-hidden">
+      <Card className="text-black overflow-hidden h-[500px] flex justify-between gap-2 flex-col">
+        <CardHeader className="p-0 max-h-80 w-full overflow-hidden">
           <Image
             src={imageSrc || "/image/pic"}
             alt={title?.toLowerCase() || "image"}
@@ -73,13 +73,13 @@ function MyProductCard({
 
           <div className="flex justify-center flex-col gap-1">
             <p className="">
-              from size {minSize} to size {maxSize}
+              از سایز {minSize} تا سایز {maxSize}
             </p>
             <p>
-              <span className="pe-3">${price}</span>
+              <span className="pe-3">{price} تومان</span>
               {discountedPrice && (
                 <span className="line-through text-zinc-500">
-                  ${discountedPrice}
+                  {discountedPrice} تومان
                 </span>
               )}
             </p>
@@ -113,7 +113,7 @@ function MyProductCardMobileSize({
           <div className="">
             <p>{title}</p>
             <p className="text-zinc-600">
-              from size {minSize} to size {maxSize}
+              از سایز {minSize} تا سایز {maxSize}
             </p>
           </div>
           {/* rate stars */}
@@ -122,8 +122,12 @@ function MyProductCardMobileSize({
           </div>
           {/* price section */}
           <div className="flex items-center justify-start gap-2 pt-1">
-            <p className="">${price}</p>
-            <p className="text-zinc-500 line-through">${discountedPrice}</p>
+            <p className="">{price} تومان</p>
+            {discountedPrice && (
+              <p className="text-zinc-500 line-through">
+                {discountedPrice} تومان
+              </p>
+            )}
           </div>
           {/* color product */}
           <div className="parent-color-product">
@@ -134,11 +138,12 @@ function MyProductCardMobileSize({
         </span>
 
         <span className="block">
-          <Image src={imageSrc} width={150} height={150} alt="product image" />
+          <Image src={imageSrc} width={150} height={150} alt="تصویر محصول" />
         </span>
       </div>
     </div>
   );
 }
 
-export  {MyProductCard,MyProductCardMobileSize};
+export { MyProductCard, MyProductCardMobileSize };
+
