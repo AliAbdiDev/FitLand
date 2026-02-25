@@ -17,12 +17,13 @@ import {
   AUTH_USER_COOKIE_NAME,
   decodeMockAuthUserCookie,
 } from "@/lib/mock-auth-session";
-import { Award, LucideShoppingBag, User } from "lucide-react";
+import { Award, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import SideBar from "./landing/side-bar";
+import CartButton from "./header/cartButton";
 
 const firstList = [
   {
@@ -75,13 +76,9 @@ async function Header() {
   return (
     <header className="mx-auto flex w-full flex-col gap-9 px-[4%] pb-7 pt-6 sm:pb-20">
       <nav className="flex w-full items-center justify-center gap-9 max-lg:flex-col-reverse lg:items-center lg:justify-around">
-        <div className="flex basis-1/4 items-center justify-start gap-2 max-lg:hidden">
+        <div className="flex basis-1/4 items-center justify-start gap-3 max-lg:hidden">
         
-          <Button asChild className="rounded-lg px-3">
-            <Link href="/cart">
-              <LucideShoppingBag />
-            </Link>
-          </Button>
+          <CartButton />
 
           {isLoggedIn ? (
             <DropdownMenu dir="rtl">
@@ -97,18 +94,18 @@ async function Header() {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="start" className="w-56">
-                <DropdownMenuLabel className="truncate text-right">
+                <DropdownMenuLabel className="">
                   {userLabel}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="justify-end text-right">
+                <DropdownMenuItem asChild className="cursor-pointer">
                   <Link href="/profile">پروفایل</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <form action={logoutAction}>
                   <DropdownMenuItem
                     asChild
-                    className="justify-end text-red-600 hover:bg-red-50 hover:text-red-700 focus:bg-red-50 focus:text-red-700"
+                    className="cursor-pointer text-red-600 hover:bg-red-100 hover:text-red-700 focus:bg-red-50 focus:text-red-700 w-full"
                   >
                     <button type="submit">خروج از حساب</button>
                   </DropdownMenuItem>

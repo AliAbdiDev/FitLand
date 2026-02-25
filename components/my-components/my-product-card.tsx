@@ -1,6 +1,9 @@
 ﻿import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import { ReactNode } from "react";
 
 export const RatingComponent = ({
   numberActiveStars,
@@ -37,6 +40,11 @@ interface Props {
   price: string;
   discountedPrice: string | null;
   classNameColorProducts?: string[];
+  descriptionText?: string;
+  hideRating?: boolean;
+  hideColorProducts?: boolean;
+  wrapperClassName?: string;
+  imageClassName?: string;
 }
 
 function MyProductCard({
@@ -104,41 +112,73 @@ function MyProductCardMobileSize({
   discountedPrice = null,
   price,
   classNameColorProducts,
-}: Props) {
+  descriptionText,
+  hideRating = false,
+  hideColorProducts = false,
+  wrapperClassName,
+  imageClassName,
+  component,
+}: Props & { component?: ReactNode }) {
+  const mobileDescription =
+    typeof descriptionText === "string"
+      ? descriptionText
+      : `از سایز ${minSize} تا سایز ${maxSize}`;
+
   return (
-    <div className="text-sm border-b border-b-zinc-200 last:border-none">
+    <div
+      className={cn(
+        "text-sm border-b border-b-zinc-200 last:border-none",
+        wrapperClassName,
+      )}
+    >
       <div className="w-full rounded-lg flex items-center justify-between">
-        <span className="space-y-2 block">
-          {/* title section */}
-          <div className="">
-            <p>{title}</p>
-            <p className="text-zinc-600">
-              از سایز {minSize} تا سایز {maxSize}
-            </p>
+        <span>
+          <div className="space-y-2 block">
+            {/* title section */}
+            <div className="">
+              <p>{title}</p>
+              {mobileDescription ? (
+                <p className="text-zinc-600">{mobileDescription}</p>
+              ) : null}
+            </div>
+            {/* rate stars */}
+            {!hideRating ? (
+              <div className="">
+                <RatingComponent
+                  numberActiveStars={numberActiveStars as string}
+                />
+              </div>
+            ) : null}
+            {/* price section */}
+            <div className="flex items-center justify-start gap-2 pt-1">
+              <p className="">{price} تومان</p>
+              {discountedPrice && (
+                <p className="text-zinc-500 line-through">
+                  {discountedPrice} تومان
+                </p>
+              )}
+            </div>
+            {/* color product */}
+            {!hideColorProducts ? (
+              <div className="parent-color-product">
+                {classNameColorProducts?.map((color, index) => (
+                  <span className={color || ""} key={index}></span>
+                ))}
+              </div>
+            ) : null}
           </div>
-          {/* rate stars */}
-          <div className="">
-            <RatingComponent numberActiveStars={numberActiveStars as string} />
-          </div>
-          {/* price section */}
-          <div className="flex items-center justify-start gap-2 pt-1">
-            <p className="">{price} تومان</p>
-            {discountedPrice && (
-              <p className="text-zinc-500 line-through">
-                {discountedPrice} تومان
-              </p>
-            )}
-          </div>
-          {/* color product */}
-          <div className="parent-color-product">
-            {classNameColorProducts?.map((color, index) => (
-              <span className={color || ""} key={index}></span>
-            ))}
-          </div>
+
+          {component}
         </span>
 
         <span className="block">
-          <Image src={imageSrc} width={150} height={150} alt="تصویر محصول" />
+          <Image
+            src={imageSrc}
+            width={150}
+            height={150}
+            alt="تصویر محصول"
+            className={cn(imageClassName)}
+          />
         </span>
       </div>
     </div>
@@ -146,4 +186,3 @@ function MyProductCardMobileSize({
 }
 
 export { MyProductCard, MyProductCardMobileSize };
-

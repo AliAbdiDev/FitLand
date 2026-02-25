@@ -61,7 +61,7 @@ function PromoCard({
   actionClassName,
 }: PromoCardProps) {
   return (
-    <Card className={cn("rounded-2xl shadow-none", className)}>
+    <Card className={cn("rounded-xl shadow-none", className)}>
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <div className={cn("mt-1 rounded-full p-2", iconWrapClassName, iconClassName)}>

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "keen-slider/keen-slider.min.css";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { Tooltip, TooltipProvider } from "@radix-ui/react-tooltip";
+import {  TooltipProvider } from "@radix-ui/react-tooltip";
 
 const iranianSans = localFont({
   src: "./fonts/Iranian Sans.ttf",
