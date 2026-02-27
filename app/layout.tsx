@@ -4,6 +4,7 @@ import "keen-slider/keen-slider.min.css";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import {  TooltipProvider } from "@radix-ui/react-tooltip";
+import { PageTracker } from "@/components/providers/PageTracker";
 
 const iranianSans = localFont({
   src: "./fonts/Iranian Sans.ttf",
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" className={iranianSans.variable}>
       <body>
+        <PageTracker />
         <TooltipProvider>{children}</TooltipProvider>
         <Toaster
           duration={4000}

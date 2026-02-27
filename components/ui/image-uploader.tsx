@@ -116,9 +116,6 @@ const buildCroppedFileName = (originalFileName: string) => {
   return `${baseName || "image"}-cropped.png`;
 };
 
-const getVariantLabel = (variant: ImageUploaderVariant) =>
-  variant === "avatar" ? "تصویر پروفایل" : "بارگذاری تصویر";
-
 export function ImageUploader({
   id,
   className,
@@ -346,8 +343,6 @@ export function ImageUploader({
 
   return (
     <div className={cn("space-y-3", className)}>
-      <Label htmlFor={inputId}>{label ?? getVariantLabel(variant)}</Label>
-
       <input
         ref={fileInputRef}
         id={inputId}
@@ -374,7 +369,7 @@ export function ImageUploader({
           >
             <Avatar
               className={cn(
-                "size-20 border border-border ring-2 ring-primary/10 transition group-hover:ring-primary/30",
+                "size-20 cursor-pointer border border-border ring-2 ring-primary/10 transition group-hover:ring-primary/30",
                 avatarSizeClassName,
               )}
             >
@@ -462,7 +457,7 @@ export function ImageUploader({
               maxImageSize={maxCroppedImageSizeBytes}
               onCrop={handleCroppedImage}
             >
-              <div className="rounded-xl border bg-muted/30 p-3">
+              <div className="rounded-xl border bg-muted/30 p-3 flex items-center justify-center">
                 <ImageCropContent className="mx-auto max-h-[60vh] max-w-full" />
               </div>
 

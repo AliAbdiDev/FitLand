@@ -8,7 +8,13 @@ export type MockAuthUserCookie = {
   phoneNumber?: string;
   address?: string;
   imageUrl?: string;
+  family?: string;
+  phoneNumber?: string;
+  address?: string;
+  imageUrl?: string;
   role?: string;
+  provinceId?: number;
+  cityId?: number;
 };
 
 const toBase64Url = (value: string) =>
@@ -40,6 +46,7 @@ export const decodeMockAuthUserCookie = (value?: string | null) => {
     }
 
     const safeValue = (input: unknown) => (typeof input === "string" ? input : "");
+    const safeNumber = (input: unknown) => (typeof input === "number" ? input : undefined);
 
     return {
       id: parsed.id,
@@ -50,6 +57,8 @@ export const decodeMockAuthUserCookie = (value?: string | null) => {
       address: safeValue(parsed.address),
       imageUrl: safeValue(parsed.imageUrl),
       role: safeValue(parsed.role) || "user",
+      provinceId: safeNumber(parsed.provinceId),
+      cityId: safeNumber(parsed.cityId),
     } satisfies MockAuthUserCookie;
   } catch {
     return null;

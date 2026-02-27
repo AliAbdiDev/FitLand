@@ -1,6 +1,4 @@
-﻿import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { cookies } from "next/headers";
+﻿import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Layout from "@/components/layout/Layout";
 import ProfileDashboardClient, {
@@ -41,81 +39,6 @@ function getFormString(formData: FormData, key: string, maxLength = 500) {
   return normalized.slice(0, maxLength);
 }
 
-function normalizeImageUrl(value: string) {
-  if (!value) {
-    return "";
-  }
-
-  try {
-    const url = new URL(value);
-
-    if (url.protocol !== "http:" && url.protocol !== "https:") {
-      return "";
-    }
-
-    return url.toString();
-  } catch {
-    return "";
-  }
-}
-
-function sanitizeFileName(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9._-]/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function getImageExtensionFromMimeType(mimeType: string) {
-  if (mimeType === "image/jpeg") {
-    return "jpg";
-  }
-
-  if (mimeType === "image/webp") {
-    return "webp";
-  }
-
-  return "png";
-}
-
-async function persistProfileImageDataUrl({
-  imageDataUrl,
-  imageFileName,
-  userId,
-}: {
-  imageDataUrl: string;
-  imageFileName: string;
-  userId: string;
-}) {
-  if (!imageDataUrl.startsWith("data:image/")) {
-    return "";
-  }
-
-  const match = imageDataUrl.match(/^data:(image\/(?:png|jpeg|webp));base64,(.+)$/);
-
-  if (!match) {
-    return "";
-  }
-
-  const [, mimeType, base64Data] = match;
-
-  if (!base64Data) {
-    return "";
-  }
-
-  const uploadDir = path.join(process.cwd(), "public", "uploads", "profile");
-  await mkdir(uploadDir, { recursive: true });
-
-  const baseName =
-    sanitizeFileName(imageFileName.replace(/\.[^.]+$/, "")) || `user-${userId}`;
-  const fileName = `${baseName}-${Date.now()}.${getImageExtensionFromMimeType(mimeType)}`;
-  const outputPath = path.join(uploadDir, fileName);
-
-  await writeFile(outputPath, Buffer.from(base64Data, "base64"));
-
-  return `/uploads/profile/${fileName}`;
-}
 
 export default async function ProfilePage({ searchParams }: { searchParams: SearchParams }) {
   const cookieStore = await cookies();
@@ -155,23 +78,8 @@ export default async function ProfilePage({ searchParams }: { searchParams: Sear
     const email = getFormString(formData, "email", 180).toLowerCase() || currentAuthUser.email;
     const phoneNumber = getFormString(formData, "phoneNumber", 32);
     const address = getFormString(formData, "address", 500);
-    const imageUrlInput = getFormString(formData, "imageUrl", 500);
-    const imageDataUrl = getFormString(formData, "imageDataUrl", 1_500_000);
-    const imageFileName = getFormString(formData, "imageFileName", 200);
-
-    let imageUrl = normalizeImageUrl(imageUrlInput);
-
-    if (imageDataUrl) {
-      const uploadedImagePath = await persistProfileImageDataUrl({
-        imageDataUrl,
-        imageFileName,
-        userId: currentAuthUser.id,
-      });
-
-      if (uploadedImagePath) {
-        imageUrl = uploadedImagePath;
-      }
-    }
+    const provinceId = formData.get("provinceId");
+    const cityId = formData.get("cityId");
 
     const tokenDisplayName =
       [firstName, family].filter(Boolean).join(" ") ||
@@ -194,7 +102,8 @@ export default async function ProfilePage({ searchParams }: { searchParams: Sear
       family,
       phoneNumber,
       address,
-      imageUrl,
+      provinceId: provinceId ? Number(provinceId) : undefined,
+      cityId: cityId ? Number(cityId) : undefined,
     });
 
     redirect("/profile?section=edit&saved=1");
