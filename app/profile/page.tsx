@@ -1,9 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Layout from "@/components/layout/Layout";
-import ProfileDashboardClient, {
-  type ProfileSection,
-} from "@/components/profile/ProfileDashboardClient";
+
 import {
   AUTH_COOKIE_NAME,
   clearAuthCookie,
@@ -12,20 +10,10 @@ import {
   setAuthCookie,
   setAuthUserCookie,
 } from "@/app/api/lib/auth";
-import ProfileDashboardClient, {
-  type ProfileSection,
-} from "@/components/profile/ProfileDashboardClient";
-import {
-  AUTH_COOKIE_NAME,
-  clearAuthCookie,
-  clearAuthUserCookie,
-  createMockAccessToken,
-  setAuthCookie,
-  setAuthUserCookie,
-} from "@/app/api/lib/auth";
+
 import { AUTH_USER_COOKIE_NAME, decodeMockAuthUserCookie } from "@/lib/mock-auth-session";
 import type { SearchParams } from "@/types/next";
-import type { SearchParams } from "@/types/next";
+import ProfileDashboardClient, { ProfileSection } from "@/components/profile/ProfileDashboardClient";
 
 const mockInvoices = [
   { id: "INV-1404-001", date: "۱۴۰۴/۱۲/۰۱", total: "۱,۳۵۰,۰۰۰ تومان", status: "پرداخت شده" },
@@ -58,11 +46,8 @@ export default async function ProfilePage({ searchParams }: { searchParams: Sear
   const authUserCookie = cookieStore.get(AUTH_USER_COOKIE_NAME)?.value;
   const authUser = decodeMockAuthUserCookie(authUserCookie);
   const rawSearch = await searchParams;
-  const initialSection = normalizeSection(getFirstValue(rawSearch?.section));
   const profileSaved = getFirstValue(rawSearch?.saved) === "1";
-  const rawSearch = await searchParams;
   const initialSection = normalizeSection(getFirstValue(rawSearch?.section));
-  const profileSaved = getFirstValue(rawSearch?.saved) === "1";
 
   if (!accessToken || !authUser) {
     redirect("/login");
@@ -127,14 +112,6 @@ export default async function ProfilePage({ searchParams }: { searchParams: Sear
   return (
     <Layout>
       <main className="mx-auto min-h-screen w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <ProfileDashboardClient
-          authUser={authUser}
-          invoices={mockInvoices}
-          initialSection={initialSection}
-          profileSaved={profileSaved}
-          saveProfileAction={saveProfileAction}
-          logoutAction={logoutAction}
-        />
         <ProfileDashboardClient
           authUser={authUser}
           invoices={mockInvoices}
