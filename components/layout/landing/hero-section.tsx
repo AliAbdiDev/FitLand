@@ -38,7 +38,7 @@ function HeroSection() {
               variant={"secondary"}
               className="text-white py-5 font font-semibold "
             >
-              مشاهده محصولات <ArrowRightCircle className="font-medium" />
+              <ArrowRightCircle className="font-medium" /> مشاهده محصولات 
             </Button>
           </div>
 

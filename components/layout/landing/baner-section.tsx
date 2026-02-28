@@ -36,7 +36,7 @@ function BanerSection({ image, href, boldTitle, lightTitle }: Props) {
 
             <Link href={href || "#"} className="inline-block">
               <Button type="button" className="" variant={"secondary"}>
-                مشاهده محصولات <ArrowRightCircle />
+                 <ArrowRightCircle /> مشاهده محصولات 
               </Button>
             </Link>
           </span>

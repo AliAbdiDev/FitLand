@@ -1,4 +1,3 @@
-import * as React from "react";
 import Image from "next/image";
 import Discount from "./card-items";
 import HeroSection from "@/components/layout/landing/hero-section";
@@ -35,7 +34,7 @@ const discountDataSection: CardType[] = Array.from(
   (_, index) => ({
     ...baseDiscountCard,
     imageHeader: `/image/Rectangle 1166(${(index % 3) + 1}).jpg`,
-  })
+  }),
 );
 const baseNewShose: CardType = {
   name: "کفش نایکی مدل S-2000",
@@ -55,7 +54,7 @@ const newShoseDataSection: CardType[] = Array.from(
       "/image/Rectangle 1166(3).png",
     ],
     imageHeader: `/image/Rectangle 1166(${(index % 3) + 1}).png`,
-  })
+  }),
 );
 
 const baseBicycle: CardType = {
@@ -72,7 +71,7 @@ const bicycleDataSection: CardType[] = Array.from(
   (_, index) => ({
     ...baseBicycle,
     imageHeader: `/image/bicycle(${(index % 3) + 1}).jpg`,
-  })
+  }),
 );
 
 function Body() {
@@ -89,11 +88,7 @@ function Body() {
       {/* this just gap */}
       <span className="block max-md:py-0.5"></span>
 
-      <SliderSection
-        cardData={discountDataSection}
-        title="تخفیف ویژه"
-        url=""
-      />
+      <SliderSection cardData={discountDataSection} title="تخفیف ویژه" url="" />
       <SliderSection
         cardData={newShoseDataSection}
         title="جدیدترین کفش‌های ورزشی"
@@ -107,19 +102,14 @@ function Body() {
         image="/image/cyclist.jpg"
       />
 
-      <SliderSection
-        cardData={bicycleDataSection}
-        title="تخفیف ویژه"
-        url=""
-      />
+      <SliderSection cardData={bicycleDataSection} title="تخفیف ویژه" url="" />
 
       <article className="max-w-md md:max-w-5xl lg:max-w-5xl mx-auto">
         <div className="w-full text-center pb-12">
           <h2 className="title-section">آخرین اخبار ورزشی</h2>
         </div>
-              
+
         <div className="flex items-center lg:justify-between justify-center w-full gap-x-5 max-lg:gap-y-12 max-lg:flex-wrap *:w-1/2 max-md:*:w-full">
-          
           <Card className="rounded-lg h-[30rem] border-zinc-300">
             <CardHeader className="!p-0 max-h-[15rem] w-full  rounded-t-lg  overflow-hidden">
               <Image
@@ -132,15 +122,17 @@ function Body() {
               />
             </CardHeader>
             <CardContent className="pt-5 space-y-3">
-              <CardTitle>
-                شکست استرالیا در اولین قدم جام جهانی زنان!
-              </CardTitle>
+              <CardTitle>شکست استرالیا در اولین قدم جام جهانی زنان!</CardTitle>
               <CardDescription className="text-black">
-                اخبار حاکی از آن است که رئیس فدراسیون فوتبال اعلام کرد که حقوق هر بازیکن فوتبال در فصل جاری 50% افزایش خواهد یافت.
+                اخبار حاکی از آن است که رئیس فدراسیون فوتبال اعلام کرد که حقوق
+                هر بازیکن فوتبال در فصل جاری 50% افزایش خواهد یافت.
               </CardDescription>
             </CardContent>
             <CardFooter>
-              <Button variant={"default"}>مشاهده خبر <ArrowRightCircle/></Button>
+              <Button variant={"default"}>
+                <ArrowRightCircle />
+                مشاهده خبر{" "}
+              </Button>
             </CardFooter>
           </Card>
           <Card className="rounded-lg h-[30rem] border-zinc-300">
@@ -155,15 +147,17 @@ function Body() {
               />
             </CardHeader>
             <CardContent className="pt-5 space-y-3">
-              <CardTitle>
-                شکست استرالیا در اولین قدم جام جهانی زنان!
-              </CardTitle>
+              <CardTitle>شکست استرالیا در اولین قدم جام جهانی زنان!</CardTitle>
               <CardDescription className="text-black">
-                تیم‌ها در اولین روز جام جهانی زنان در مادرید، اسپانیا با یکدیگر به رقابت پرداختند.
+                تیم‌ها در اولین روز جام جهانی زنان در مادرید، اسپانیا با یکدیگر
+                به رقابت پرداختند.
               </CardDescription>
             </CardContent>
             <CardFooter>
-              <Button variant={"default"}>مشاهده خبر <ArrowRightCircle/></Button>
+              <Button variant={"default"}>
+                <ArrowRightCircle />
+                مشاهده خبر{" "}
+              </Button>
             </CardFooter>
           </Card>
         </div>

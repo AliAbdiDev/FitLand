@@ -1,35 +1,47 @@
-"use client";
+﻿"use client";
 import { Button } from "@/components/ui/button";
-
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "@/hooks/use-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
-import { resetFilters} from "@/redux/shop-filters-slice";
 import { useRef, useState } from "react";
+import { useShopFiltersStore } from "@/stores/shop-filters-store";
+import { useShallow } from "zustand/react/shallow";
 import FilterAccardion from "./filter-accardion";
+import {
+  buildShopFilterQueryString,
+  clearShopFiltersQueryString,
+  toShopUrl,
+} from "./shop-filter-query";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Filters() {
-  const dispatch: AppDispatch = useDispatch();
-  const filtersValue = useSelector((state: RootState) => state.shopFilters);
-  const [tagInputValue, setTagInputValue] = useState(null);
+  const filtersValue = useShopFiltersStore(
+    useShallow((state) => ({
+      range: state.range,
+      colorSelected: state.colorSelected,
+      sizeSelected: state.sizeSelected,
+    }))
+  );
+  const resetFilters = useShopFiltersStore((state) => state.resetFilters);
+  const [tagInputValue, setTagInputValue] = useState<unknown>(null);
   const tagInputRef = useRef<{ reset: () => void | null }>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const submitFilters = () => {
-    toast({
-      title: "این حالت نمایشی است. پروژه در حال به‌روزرسانی است",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">
-            {JSON.stringify(
-              { ...filtersValue, tagInputValue: tagInputValue },
-              null,
-              2
-            )}
-          </code>
-        </pre>
-      ),
-    });
+    const queryString = buildShopFilterQueryString(
+      searchParams.toString(),
+      filtersValue,
+      tagInputValue
+    );
+
+    router.push(toShopUrl(queryString));
+  };
+
+  const handleReset = () => {
+    resetFilters();
+    tagInputRef.current?.reset();
+
+    const queryString = clearShopFiltersQueryString(searchParams.toString());
+    router.push(toShopUrl(queryString));
   };
 
   return (
@@ -37,14 +49,7 @@ function Filters() {
       <ScrollArea className="size-full px-[5%]">
         <div className="pb-2 flex justify-between items-center w-full">
           <h3 className=" font-semibold">فیلترها</h3>
-          <button
-            type="button"
-            className="text-sm text-red-700"
-            onClick={() => {
-              dispatch(resetFilters());
-              tagInputRef.current?.reset();
-            }}
-          >
+          <button type="button" className="text-sm text-red-700" onClick={handleReset}>
             حذف فیلترها
           </button>
         </div>
@@ -54,12 +59,7 @@ function Filters() {
             tagInputRef={tagInputRef}
           />
 
-          <Button
-            type="submit"
-            variant={"default"}
-            className="mt-5"
-            onClick={submitFilters}
-          >
+          <Button type="submit" variant="default" className="mt-5" onClick={submitFilters}>
             اعمال فیلتر
           </Button>
         </div>

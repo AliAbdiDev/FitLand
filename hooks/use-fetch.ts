@@ -30,6 +30,8 @@ export const useFetch = ({
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
+        // Intentional immediate loading flag for this request cycle.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setLoading(true);
         fetchHandler({ endpoint, method, payload, options, customErrorMessage })
             .then(({ response, data, errorMessage }) => {

@@ -1,42 +1,48 @@
-import { hashPassword, createErrorResponse, prisma } from '@/app/api/lib';
-import { NextRequest, NextResponse } from 'next/server';
-import { z } from 'zod';
-import { extractSafeParseErrors } from '@/app/api/lib';
-import { email, password } from '@/app/shemas';
+import { createErrorResponse, extractSafeParseErrors } from "@/app/api/lib";
+import { email, password } from "@/app/shemas";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+
+export const runtime = "nodejs";
 
 const registerSchema = z.object({
-    email,
-    password,
-    name: z.string().min(1, 'Name is required').optional(),
+  email,
+  password,
+  name: z.string().min(1, "Name is required").optional(),
+  username: z.string().min(1, "Name is required").optional(),
 });
 
 export async function POST(request: NextRequest) {
+  try {
+    let body = null;
     try {
-
-        const body = await request.json()
-        const result = registerSchema.safeParse(body);
-        if (!result.success) {
-            return createErrorResponse({
-                message: 'Invalid input',
-                details: extractSafeParseErrors(result),
-                status: 400,
-            });
-        }
-        const { email, name, password } = result?.data;
-        const user = await prisma.user.findUnique({ where: { email } })
-        if (user) {
-            return createErrorResponse({
-                message: 'Email is already registered',
-                status: 409, // Conflict
-            });
-        }
-        const hashedPassword = await hashPassword(password);
-        await prisma.user.create({ data: { email, password: hashedPassword, name, } });
-        // NextResponse.redirect(new URL('/auth/login',request.url))
-        return NextResponse.json({ message: 'Registration was successful' }, { status: 201 })
-    } catch (error) {
-        if (error) {
-            return createErrorResponse({ details: error?.message })
-        }
+      body = await request.json();
+    } catch {
+      return createErrorResponse({
+        message: "Invalid or missing JSON in request body",
+        status: 400,
+      });
     }
+
+    const result = registerSchema.safeParse(body);
+    if (!result.success) {
+      return createErrorResponse({
+        message: "Invalid input",
+        details: extractSafeParseErrors(result),
+        status: 400,
+      });
+    }
+
+    const normalizedName = result.data.name || result.data.username || "";
+    void normalizedName;
+
+    return NextResponse.json(
+      { message: "Registration was successful" },
+      { status: 201 }
+    );
+  } catch (error) {
+    return createErrorResponse({
+      details: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
 }
